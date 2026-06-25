@@ -1,0 +1,29 @@
+[
+  {
+    "source": "sysmon",
+    "event_id": "evt-001",
+    "timestamp": "2026-06-20T10:15:00Z",
+    "host": "WORKSTATION-07",
+    "user": "jdoe",
+    "process": "powershell.exe",
+    "command_line": "powershell.exe -enc JABzAD0AT...",
+    "event_type": "process_execution"
+  },
+  {
+    "source": "suricata",
+    "timestamp": "2026-06-20T10:16:32Z",
+    "src_ip": "10.0.5.21",
+    "dest_ip": "185.44.12.7",
+    "signature": "ET MALWARE Possible C2 Beacon",
+    "category": "Command and Control",
+    "severity": 1
+  },
+  {
+    "source": "wazuh",
+    "timestamp": "2026-06-20T10:17:10Z",
+    "host": "WORKSTATION-07",
+    "rule_description": "New scheduled task created",
+    "rule_level": 9,
+    "rule_groups": ["persistence", "windows"]
+  }
+]

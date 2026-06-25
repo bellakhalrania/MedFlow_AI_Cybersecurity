@@ -1,0 +1,29 @@
+[
+  {
+    "timestamp": "2026-06-25T16:50:01Z",
+    "agent": {"name": "FILESRV-DB01"},
+    "rule": {
+      "description": "Large volume of files compressed into single archive (possible staging)",
+      "level": 8,
+      "groups": ["data_staging", "linux"]
+    }
+  },
+  {
+    "timestamp": "2026-06-25T16:52:30Z",
+    "agent": {"name": "FILESRV-DB01"},
+    "rule": {
+      "description": "Outbound connection to unauthorized cloud storage domain (mega.nz)",
+      "level": 11,
+      "groups": ["exfiltration", "policy_violation"]
+    }
+  },
+  {
+    "timestamp": "2026-06-25T16:53:05Z",
+    "agent": {"name": "FILESRV-DB01"},
+    "rule": {
+      "description": "Audit log cleared shortly after large file transfer",
+      "level": 14,
+      "groups": ["defense_evasion", "anti_forensics"]
+    }
+  }
+]
