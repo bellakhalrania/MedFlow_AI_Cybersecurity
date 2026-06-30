@@ -1,0 +1,29 @@
+[
+  {
+    "timestamp": "2026-06-24T09:02:50Z",
+    "agent": {"name": "FIN-LAPTOP-12"},
+    "rule": {
+      "description": "PowerShell executed with encoded command argument",
+      "level": 10,
+      "groups": ["windows", "powershell", "execution"]
+    }
+  },
+  {
+    "timestamp": "2026-06-24T09:06:25Z",
+    "agent": {"name": "FIN-LAPTOP-12"},
+    "rule": {
+      "description": "Possible credential dumping via LSASS memory access",
+      "level": 13,
+      "groups": ["windows", "credential_access", "mitre_t1003"]
+    }
+  },
+  {
+    "timestamp": "2026-06-24T09:11:42Z",
+    "agent": {"name": "FIN-LAPTOP-12"},
+    "rule": {
+      "description": "Authenticated SMB admin share connection to remote host DC-FILESRV01",
+      "level": 9,
+      "groups": ["windows", "lateral_movement"]
+    }
+  }
+]

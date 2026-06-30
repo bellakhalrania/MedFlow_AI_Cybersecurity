@@ -1,0 +1,312 @@
+Agentic Cybersecurity Platform
+Milestone 2 – Agent Integration with Security Tools
+
+Project Overview
+
+During the previous milestone, we successfully established the intelligence layer of the platform:
+
+* MITRE ATT&CK Knowledge Base
+* Vector Database
+* RAG Architecture
+* Red Team Agent
+* Detection Agent
+* ATT&CK Retrieval System
+
+The agents are now capable of understanding attack techniques and reasoning over cybersecurity knowledge. However, they still operate in isolation from real cybersecurity environments and tools.
+
+
+Why Agentic AI?
+
+Traditional security tools generate findings, alerts, logs, and telemetry. They are excellent at collecting information but limited when it comes to reasoning and decision-making.
+AI agents excel at:
+
+* Planning
+* Correlation
+* Prioritization
+* Campaign reasoning
+* Threat prediction
+
+The goal is :
+AI Agents decide.
+Security Tools execute.
+
+Agent Framework Selection
+
+Several agentic frameworks were evaluated.
+
+CrewAI
+
+Recommended for multi-agent collaboration.
+Strengths:
+
+* Role-based agents
+* Hierarchical workflows
+* Easy orchestration
+* Suitable for Red Team and Threat Intelligence operations
+
+Example:
+Recon Agent → Attack Planner Agent → Reporting Agent
+or
+Collection Agent → Correlation Agent → Prediction Agent
+CrewAI is recommended as the primary framework for the project.
+
+SmolAgents
+
+Recommended for lightweight autonomous agents.
+Strengths:
+
+* Simple implementation
+* Fast experimentation
+* Strong tool-calling capabilities
+* Good for Proof-of-Concept development
+
+Ideal for:
+
+* IOC enrichment agents
+* ATT&CK retrieval agents
+* Small autonomous tasks
+
+
+LangGraph
+
+Recommended for complex agent workflows.
+Strengths:
+
+* Stateful execution
+* Human-in-the-loop support
+* Long-running workflows
+* Multi-step reasoning
+
+Ideal for:
+
+* Campaign generation
+* Threat correlation
+* Attack path planning
+
+
+AutoGen
+
+Recommended for collaborative AI teams.
+Strengths:
+
+* Agent-to-agent communication
+* Debate and reasoning mechanisms
+* Task delegation
+
+Ideal for:
+
+* Red Team vs Threat Intelligence simulations
+* Adversarial agent interactions
+* Purple Team exercises
+
+
+AI Red Team Platform
+
+The Red Team platform aims to emulate realistic adversary behavior against the MedFlow healthcare infrastructure.
+Rather than executing isolated security tests, the platform generates complete attack campaigns.
+
+Core AI Agents
+
+Campaign Orchestrator Agent
+Responsible for defining attack objectives.
+Example:
+Goal:
+Access Patient Records
+The agent creates a complete attack plan and coordinates other agents.
+Reconnaissance Agent
+Uses:
+
+* Nmap
+* BloodHound
+* LDAP Enumeration
+* DNS Enumeration
+
+Responsibilities:
+
+* Discover assets
+* Identify attack surfaces
+* Classify infrastructure
+
+Output:
+Infrastructure knowledge graph.
+Identity Attack Agent
+Uses:
+
+* BloodHound
+* SharpHound
+* Impacket
+* Kerbrute
+
+Responsibilities:
+
+* Analyze Active Directory
+* Discover attack paths
+* Evaluate privilege escalation opportunities
+
+Output:
+Potential paths to Domain Admin or high-value targets.
+Web and API Attack Agent
+Uses:
+
+* Burp Suite
+* OWASP ZAP
+* Postman
+
+Responsibilities:
+
+* Discover endpoints
+* Test authorization controls
+* Analyze business logic vulnerabilities
+
+Output:
+Healthcare-specific attack opportunities.
+Blockchain Security Agent
+Uses:
+
+* Slither
+* Mythril
+* Hardhat
+
+Responsibilities:
+
+* Analyze smart contracts
+* Evaluate permission systems
+* Detect access control weaknesses
+
+Output:
+Potential blockchain attack scenarios.
+Reporting Agent
+Responsibilities:
+
+* ATT&CK Mapping
+* Attack Narratives
+* Findings
+* Remediation Recommendations
+
+Output:
+Executive and technical reports.
+
+Threat Intelligence Platform
+
+The Threat Intelligence platform transforms raw telemetry into actionable intelligence.
+The objective is to move beyond alert monitoring and create a proactive intelligence-driven system.
+
+Core AI Agents
+
+Collection Agent
+Uses:
+
+* Wazuh
+* Sysmon
+* Suricata
+* Zeek
+
+Responsibilities:
+
+* Collect telemetry
+* Normalize data
+* Enrich events
+
+Output:
+Structured intelligence events.
+IOC Intelligence Agent
+Uses:
+
+* MISP
+* Threat Feeds
+* CVE Databases
+
+Responsibilities:
+
+* IOC enrichment
+* Threat actor association
+* Malware attribution
+
+Output:
+Contextual intelligence.
+Campaign Correlation Agent
+Uses:
+
+* Elastic
+* Neo4j
+
+Responsibilities:
+
+* Link isolated alerts
+* Build attack campaigns
+* Identify attack stages
+
+Output:
+Complete attacker storylines.
+Active Directory Intelligence Agent
+Uses:
+
+* BloodHound
+* Sysmon
+* Windows Event Logs
+
+Responsibilities:
+
+* Analyze privilege relationships
+* Detect risky paths
+* Identify critical assets
+
+Output:
+Identity risk intelligence.
+Blockchain Intelligence Agent
+Uses:
+
+* Blockchain Event Listeners
+* Smart Contract Logs
+
+Responsibilities:
+
+* Monitor permission changes
+* Detect unusual wallet activity
+* Identify fraud indicators
+
+Output:
+Blockchain threat intelligence.
+Threat Prediction Agent
+Responsibilities:
+
+* Predict attacker behavior
+* Forecast next ATT&CK techniques
+* Estimate business impact
+
+Output:
+Proactive intelligence recommendations.
+
+Shared Intelligence Layer
+
+Both platforms will share common services:
+
+* MITRE ATT&CK
+* Sigma Rules
+* Vector Database
+* Neo4j Knowledge Graph
+* Agent Framework
+* Shared Memory Layer
+
+This ensures offensive and defensive agents reason using the same intelligence foundation.
+
+Knowledge Graph Integration
+
+Neo4j will serve as the central intelligence hub.
+The graph will contain:
+
+* Assets
+* Users
+* Active Directory Objects
+* Threat Actors
+* Campaigns
+* ATT&CK Techniques
+* Detections
+* Blockchain Entities
+
+This allows agents to reason over relationships rather than isolated events.
+
+Expected Outcome
+
+The final platform will not be a collection of disconnected security tools.
+Instead, it will become an Agentic Cybersecurity Ecosystem where AI agents coordinate offensive and defensive operations, leverage traditional security frameworks, build attack campaigns, correlate intelligence, and provide predictive insights for healthcare cybersecurity environments.

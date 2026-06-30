@@ -1,47 +1,45 @@
 # Threat Intelligence Report
 
-**Campaign:** Potential Malware Campaign
+**Campaign:** Lateral Movement and Credential Dumping
 **Campaign ID:** CAM-001
-**Generated:** 2026-06-25T09:38:28.353433+00:00
+**Generated:** 2026-06-29T10:22:43.060071+00:00
 
 ---
 
 ### Threat Intelligence Report
 #### Executive Summary
-A potential malware campaign, identified as CAM-001, has been detected within the network. The campaign involves the use of PowerShell for command and scripting interpretation, discovery of system network connections, and the creation of new scheduled tasks. These activities suggest an attempt by an attacker to establish a foothold and potentially move laterally within the network. This report outlines the timeline of events, identified IOCs, employed ATT&CK techniques, campaign assessment, predicted next steps, and recommendations for mitigation.
+A malicious campaign, identified as CAM-001, has been detected on the network, involving lateral movement and credential dumping techniques. The campaign began on June 24, 2026, at 09:02:50Z, with the execution of a PowerShell command with an encoded argument on host FIN-LAPTOP-12. Subsequent events included possible credential dumping via LSASS memory access and an authenticated SMB admin share connection to remote host DC-FILESRV01. The attackers have demonstrated the ability to execute PowerShell commands, dump credentials, and use Windows Admin Shares for lateral movement.
 
 #### Timeline
-- **2026-06-20T10:15:00Z**: A process execution event was detected involving `powershell.exe` on host `WORKSTATION-07`.
-- **2026-06-20T10:16:32Z**: A network connection was established from `10.0.5.21` to `185.44.12.7`, flagged as a potential C2 beacon.
-- **2026-06-20T10:17:10Z**: A new scheduled task was created on `WORKSTATION-07`.
+* June 24, 2026, 09:02:50Z: PowerShell executed with encoded command argument on FIN-LAPTOP-12
+* June 24, 2026, 09:06:25Z: Possible credential dumping via LSASS memory access on FIN-LAPTOP-12
+* June 24, 2026, 09:11:42Z: Authenticated SMB admin share connection to remote host DC-FILESRV01 from FIN-LAPTOP-12
 
 #### IOCs
-| Value | IOC Type | Verdict | Category | Justification |
-| --- | --- | --- | --- | --- |
-| `powershell.exe` | Domain | Benign | System Component | Legitimate Windows system component. |
-| `10.0.5.21` | IP | Benign | Private IP | Private IP address used for local networking. |
-| `185.44.12.7` | IP | Suspicious | Unknown IP | IP address with no clear attribution or known legitimate use. |
+No specific IOCs have been identified in this campaign.
 
 #### ATT&CK Techniques
-| Technique ID | Name | Confidence | Evidence Event ID |
-| --- | --- | --- | --- |
-| T1059 | Command and Scripting Interpreter | 0.8 | `a4f264cd-d903-4236-80e6-2a718dd8a3ab` |
-| T1049 | System Network Connections Discovery | 0.8 | `458ec7ce-e1f5-4dd7-9b38-f548ee846eac` |
-| T1053 | Scheduled Task | 0.9 | `4d852516-1165-4447-af3e-07aab9888019` |
+The following techniques have been observed:
+* **T1086: PowerShell**: Execution of PowerShell commands with encoded arguments
+* **T1003.001: LSASS Memory**: Possible credential dumping via LSASS memory access
+* **T1077: Windows Admin Shares**: Authenticated SMB admin share connection to remote host DC-FILESRV01
 
 #### Campaign Assessment
-The campaign, CAM-001, involves techniques indicative of an attacker attempting to establish persistence and gather information about the network. The use of PowerShell, network connection discovery, and scheduled task creation suggests a focused effort to maintain access and potentially expand the attacker's foothold.
+The campaign, CAM-001, involves lateral movement and credential dumping techniques, indicating a potential threat actor attempting to gain access to sensitive information and move laterally within the network. The use of PowerShell, LSASS memory access, and Windows Admin Shares suggests a sophisticated attacker with knowledge of Windows system internals.
 
 #### Predicted Next Steps
-Based on the observed techniques, the attacker is likely to employ the following techniques next:
-- **T1046**: Network Service Discovery, to identify vulnerable services.
-- **T1021**: Remote Services, to establish a remote connection.
-- **T1210**: Exploitation of Remote Services, for lateral movement and further access.
-These techniques are commonly used in attack chains to expand the attacker's presence within the network.
+Based on the observed techniques, the attacker is likely to employ the following techniques:
+* **T1078: Valid Accounts**: Use of valid accounts to gain additional credentials
+* **T1003: OS Credential Dumping**: Dumping of credentials from operating system components
+* **T1021.002: SMB/Windows Admin Shares**: Use of SMB/Windows Admin Shares for further lateral movement
+* **T1059.001: PowerShell**: Execution of additional PowerShell commands
+* **T1038: DLL Search Order Hijacking**: Potential use of DLL search order hijacking for persistence
+* **T1529: System Shutdown/Reboot**: Disruption of system resources through shutdown or reboot
 
 #### Recommendations
-1. **Monitor Network Activity**: Closely monitor network traffic for any suspicious connections, especially to and from `185.44.12.7`.
-2. **Restrict PowerShell Usage**: Limit the use of PowerShell to only necessary personnel and monitor its execution closely.
-3. **Inspect Scheduled Tasks**: Regularly inspect newly created scheduled tasks for suspicious activity.
-4. **Implement Security Updates**: Ensure all systems are up-to-date with the latest security patches to mitigate potential vulnerabilities.
-5. **Conduct Regular Security Audits**: Perform regular security audits to identify and address any vulnerabilities or suspicious activity within the network.
+To mitigate the potential impact of this campaign, the following recommendations are made:
+* Monitor PowerShell activity and restrict its use to authorized personnel
+* Implement additional security controls around LSASS memory access and Windows Admin Shares
+* Conduct regular credential audits and rotate credentials frequently
+* Implement a least-privilege access model to limit lateral movement
+* Monitor system logs for suspicious activity and implement incident response plans in case of detection.
