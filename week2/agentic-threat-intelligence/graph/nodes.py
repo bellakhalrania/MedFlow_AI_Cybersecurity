@@ -11,6 +11,7 @@ from agents.attack_mapping_agent import AttackMappingAgent
 from agents.correlation_agent import CorrelationAgent
 from agents.prediction_agent import PredictionAgent
 from agents.reporting_agent import ReportingAgent
+from agents.response_agent import ResponseAgent
 
 collection_agent = CollectionAgent()
 enrichment_agent = EnrichmentAgent()
@@ -18,6 +19,7 @@ mapping_agent = AttackMappingAgent()
 correlation_agent = CorrelationAgent()
 prediction_agent = PredictionAgent()
 reporting_agent = ReportingAgent()
+response_agent = ResponseAgent()
 
 
 def collection_node(state: InvestigationState) -> dict:
@@ -55,3 +57,12 @@ def prediction_node(state: InvestigationState) -> dict:
 def reporting_node(state: InvestigationState) -> dict:
     report = reporting_agent.run(state)
     return {"report": report}
+
+
+def response_node(state: InvestigationState) -> dict:
+    results = response_agent.run(
+        campaign=state.get("campaign", {}),
+        techniques=state.get("techniques", []),
+        iocs=state.get("iocs", []),
+    )
+    return {"actions_taken": [r.model_dump() for r in results]}

@@ -1,11 +1,3 @@
-"""
-agents/attack_mapping_agent.py
-Maps each normalized event to a MITRE ATT&CK technique, using RAG
-(retrieval from ChromaDB) to ground the LLM's classification in actual
-ATT&CK technique descriptions rather than relying purely on parametric
-knowledge.
-"""
-
 from typing import List, Dict
 from rag.retriever import retrieve_attack_context
 from llm.groq_client import invoke_llm

@@ -1,10 +1,3 @@
-"""
-graph/state.py
-The shared investigation state that flows through every node in the LangGraph
-workflow. Each agent reads relevant fields and writes its own output back,
-so the next agent always has full context.
-"""
-
 from typing import TypedDict, List, Dict, Any, Optional
 
 
@@ -30,6 +23,9 @@ class InvestigationState(TypedDict, total=False):
     # --- Reporting Agent output ---
     report: str                               # final markdown intelligence report
 
+    # --- Response Agent output ---
+    actions_taken: List[Dict[str, Any]]       # results of proposed/executed/pending response actions
+
     # --- Bookkeeping ---
     errors: List[str]                         # any non-fatal errors collected along the way
     metadata: Dict[str, Any]                  # run id, timestamps, source system, etc.
@@ -45,6 +41,7 @@ def new_investigation_state(raw_events: Optional[List[Dict[str, Any]]] = None) -
         campaign={},
         prediction={},
         report="",
+        actions_taken=[],
         errors=[],
         metadata={},
     )

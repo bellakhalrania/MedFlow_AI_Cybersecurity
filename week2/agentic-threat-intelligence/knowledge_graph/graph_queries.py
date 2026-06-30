@@ -1,9 +1,3 @@
-"""
-knowledge_graph/graph_queries.py
-Pre-built investigation queries for analysts, e.g. "show all hosts that
-triggered technique T1059".
-"""
-
 from databases.neo4j_manager import neo4j_manager
 
 

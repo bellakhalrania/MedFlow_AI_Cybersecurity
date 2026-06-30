@@ -1,10 +1,3 @@
-"""
-intelligence/campaign_builder.py
-Helper functions for building a human-readable attack storyline (ordered
-chain of tactics/techniques) from a campaign's related techniques -
-used by the Reporting Agent and graph_queries.py.
-"""
-
 from typing import List, Dict
 
 # Canonical ATT&CK tactic ordering (kill-chain order), used to sort techniques

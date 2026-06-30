@@ -27,7 +27,6 @@ def parse_sysmon_json(filepath: str) -> List[Dict]:
         events.append(
             {
                 "source": "sysmon",
-                   #"sysmon_event_id": entry.get("EventID") or entry.get("event_id"),
                 "event_id": entry.get("EventID") or entry.get("event_id"),
                 "timestamp": entry.get("UtcTime") or entry.get("timestamp"),
                 "host": entry.get("Computer") or entry.get("host"),

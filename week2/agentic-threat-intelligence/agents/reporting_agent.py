@@ -1,10 +1,3 @@
-"""
-agents/reporting_agent.py
-Generates the final markdown intelligence report from the full
-investigation state, using the LLM for prose plus a Jinja2 template for
-structure (reports/markdown_templates.py) for consistent formatting.
-"""
-
 from graph.state import InvestigationState
 from llm.groq_client import invoke_llm
 from llm.prompts import REPORTING_SYSTEM_PROMPT

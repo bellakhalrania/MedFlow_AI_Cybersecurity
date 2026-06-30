@@ -1,16 +1,3 @@
-"""
-knowledge_graph/graph_schema.py
-Documents the Neo4j graph schema used by this platform (node labels,
-relationship types) and provides Cypher constraint-setup helpers.
-
-Node labels:   Host, User, Event, IOC, Technique, Campaign
-Relationships: (Host)-[:GENERATED]->(Event)
-               (Event)-[:MAPPED_TO]->(Technique)
-               (Event)-[:INVOLVED]->(IOC)
-               (Event)-[:PART_OF]->(Campaign)
-               (Technique)-[:PART_OF]->(Campaign)
-"""
-
 from databases.neo4j_manager import neo4j_manager
 
 CONSTRAINTS = [

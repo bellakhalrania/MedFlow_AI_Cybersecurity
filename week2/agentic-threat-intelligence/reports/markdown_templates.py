@@ -1,9 +1,3 @@
-"""
-reports/markdown_templates.py
-Jinja2-based markdown report skeleton, used as a fallback / wrapper around
-the LLM-generated report body to guarantee consistent headers and metadata.
-"""
-
 from jinja2 import Template
 
 REPORT_TEMPLATE = Template("""\

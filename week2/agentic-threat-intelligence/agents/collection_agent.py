@@ -1,9 +1,3 @@
-"""
-agents/collection_agent.py
-Converts raw, heterogeneous telemetry (Sysmon/Suricata/Zeek/Wazuh) into a
-normalized event schema the rest of the pipeline can rely on.
-"""
-
 import uuid
 from typing import List, Dict
 from llm.groq_client import invoke_llm

@@ -1,10 +1,3 @@
-"""
-intelligence/technique_predictor.py
-Non-LLM fallback predictor: a simple lookup table of common ATT&CK
-tactic-to-tactic transitions, used as a sanity check / fallback alongside
-the LLM-driven prediction_agent.py.
-"""
-
 from typing import List
 
 # Simplified common next-tactic transitions (kill-chain heuristics)

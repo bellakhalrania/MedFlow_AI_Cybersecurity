@@ -1,8 +1,3 @@
-"""
-reports/report_generator.py
-Saves the final markdown report to disk under reports/generated_reports/.
-"""
-
 import os
 from datetime import datetime, timezone
 from typing import Dict

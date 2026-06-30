@@ -1,10 +1,3 @@
-"""
-agents/correlation_agent.py
-Connects isolated events/IOCs/techniques into a single coherent attack
-campaign narrative, and persists the relationships into Neo4j via
-knowledge_graph/graph_builder.py.
-"""
-
 import uuid
 from typing import List, Dict
 from llm.groq_client import invoke_llm

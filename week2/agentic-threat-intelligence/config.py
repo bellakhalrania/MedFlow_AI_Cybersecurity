@@ -1,10 +1,3 @@
-"""
-config.py
-Central configuration for the Agentic Threat Intelligence Platform.
-All values are loaded from environment variables (.env file) so secrets
-never live in source control.
-"""
-
 import os
 from dotenv import load_dotenv
 
@@ -38,6 +31,15 @@ class Config:
 
     # ---------------- Reporting ----------------
     REPORTS_OUTPUT_DIR = os.getenv("REPORTS_OUTPUT_DIR", "./reports/generated_reports")
+
+    # ---------------- Response / Action layer ----------------
+    # Global kill switch. Default OFF: every action requires human approval
+    # until you've tested the policy and connectors and explicitly opt in.
+    AUTO_RESPONSE_ENABLED = os.getenv("AUTO_RESPONSE_ENABLED", "false").lower() == "true"
+    # Dry run: when true, connectors log what they WOULD do instead of
+    # calling the real firewall/EDR/IAM API. Keep this true until connectors
+    # are wired to your real infrastructure and you trust the policy.
+    DRY_RUN = os.getenv("DRY_RUN", "true").lower() == "true"
 
     @classmethod
     def validate(cls):

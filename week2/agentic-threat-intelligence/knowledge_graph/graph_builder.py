@@ -1,10 +1,3 @@
-"""
-knowledge_graph/graph_builder.py
-Writes events, IOCs, techniques, and campaigns into Neo4j as a connected
-graph, so analysts can run relationship queries (e.g. "show all hosts using
-T1059").
-"""
-
 from typing import List, Dict
 from databases.neo4j_manager import neo4j_manager
 

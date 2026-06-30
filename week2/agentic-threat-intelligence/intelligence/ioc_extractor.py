@@ -1,9 +1,3 @@
-"""
-intelligence/ioc_extractor.py
-Regex-based extraction of IPs, hashes, URLs, and domains from normalized
-events, before they're sent to the Enrichment Agent for LLM-based scoring.
-"""
-
 import re
 from typing import List, Dict
 

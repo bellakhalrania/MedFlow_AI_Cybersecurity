@@ -1,10 +1,3 @@
-"""
-intelligence/mitre_mapper.py
-Lightweight lookup helpers over the locally ingested ATT&CK technique
-metadata - used for fast, non-LLM lookups (e.g. technique_id -> tactic),
-separate from the RAG-based semantic mapping done in attack_mapping_agent.py.
-"""
-
 import json
 from config import config
 

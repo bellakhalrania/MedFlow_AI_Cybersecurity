@@ -1,9 +1,3 @@
-"""
-agents/enrichment_agent.py
-Extracts indicators of compromise from normalized events and enriches each
-with a verdict, category, and justification.
-"""
-
 from typing import List, Dict
 from intelligence.ioc_extractor import extract_iocs
 from llm.groq_client import invoke_llm

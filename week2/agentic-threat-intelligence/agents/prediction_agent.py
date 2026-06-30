@@ -1,10 +1,3 @@
-"""
-agents/prediction_agent.py
-Predicts the attacker's likely next technique(s) given the techniques
-observed so far, combining RAG-retrieved related techniques with LLM
-reasoning about common ATT&CK attack-chain progressions.
-"""
-
 from typing import List, Dict
 from rag.attack_chain_retriever import retrieve_likely_next_techniques
 from llm.groq_client import invoke_llm

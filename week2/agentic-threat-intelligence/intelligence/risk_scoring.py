@@ -1,9 +1,3 @@
-"""
-intelligence/risk_scoring.py
-Assigns a Low/Medium/High/Critical risk score to a campaign based on the
-number and severity of mapped techniques and enriched IOC verdicts.
-"""
-
 from typing import List, Dict
 
 
