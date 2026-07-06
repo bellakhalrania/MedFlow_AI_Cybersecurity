@@ -1,9 +1,3 @@
-"""
-memory/investigation_memory.py
-Simple in-process (and optionally file-persisted) memory of past
-investigations, so agents can reference prior findings instead of treating
-every run as a blank slate.
-"""
 
 import json
 import os

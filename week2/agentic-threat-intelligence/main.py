@@ -1,19 +1,11 @@
 import argparse
-import json
+import logging
 
 from config import config
-from graph.state import new_investigation_state
-from graph.workflow import threat_intel_workflow
-from memory.investigation_memory import investigation_memory
+from investigation_service import load_events, run_investigation
 
 
-def load_events(path: str) -> list[dict]:
-    with open(path, "r", encoding="utf-8") as f:
-        try:
-            return json.load(f)
-        except json.JSONDecodeError:
-            f.seek(0)
-            return [json.loads(line) for line in f if line.strip()]
+logger = logging.getLogger(__name__)
 
 
 def main():
@@ -28,12 +20,12 @@ def main():
     config.validate()
 
     raw_events = load_events(args.events)
-    initial_state = new_investigation_state(raw_events=raw_events)
-
     print(f"Running investigation on {len(raw_events)} raw events...\n")
-    final_state = threat_intel_workflow.invoke(initial_state)
-
-    investigation_memory.save(final_state)
+    try:
+        final_state = run_investigation(raw_events)
+    except Exception:
+        logger.exception("Investigation run failed")
+        return 1
 
     print("=" * 60)
     print("INTELLIGENCE REPORT")
@@ -50,6 +42,8 @@ def main():
         action = a["action"]
         print(f"[{a['status'].upper()}] {action['action_type']} -> {action['target']} | {a['detail']}")
 
+    return 0
+
 
 if __name__ == "__main__":
-    main()
+    raise SystemExit(main())

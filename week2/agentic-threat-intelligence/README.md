@@ -9,13 +9,6 @@ SIEM rules.
 Security Tools Collect Data  →  AI Agents Analyze Data
 ```
 
-## Quick Links
-
-- **Full architecture:** [`docs/architecture.md`](docs/architecture.md)
-- **Pipeline / workflow detail:** [`docs/workflow.md`](docs/workflow.md)
-- **Database schema (Neo4j + ChromaDB):** [`docs/database_schema.md`](docs/database_schema.md)
-- **Step-by-step install guide:** [`INSTALLATION_GUIDE.md`](INSTALLATION_GUIDE.md)
-
 ## Quick Start
 
 ```bash
@@ -27,20 +20,6 @@ curl -L -o data/attack_data/enterprise_attack.json https://raw.githubusercontent
 python -m rag.ingest_attack
 python main.py
 ```
-
-See `INSTALLATION_GUIDE.md` for the full walkthrough, troubleshooting, and
-optional real telemetry source setup (Sysmon/Suricata/Zeek/Wazuh).
-
-## The Six Agents
-
-| # | Agent | Job |
-|---|---|---|
-| 1 | Collection | Normalize raw telemetry into one event schema |
-| 2 | IOC Enrichment | Extract & score IPs/hashes/domains/URLs |
-| 3 | ATT&CK Mapping (RAG) | Map behavior to MITRE technique IDs |
-| 4 | Campaign Correlation | Group isolated events into one attack narrative |
-| 5 | Threat Prediction | Forecast the attacker's likely next move |
-| 6 | Reporting | Generate the final markdown intelligence report |
 
 ## Project Layout
 

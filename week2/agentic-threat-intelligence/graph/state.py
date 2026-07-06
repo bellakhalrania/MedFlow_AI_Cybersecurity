@@ -11,6 +11,9 @@ class InvestigationState(TypedDict, total=False):
     # --- IOC Enrichment Agent output ---
     iocs: List[Dict[str, Any]]                # enriched indicators (ip/hash/domain/url + context)
 
+    # --- Vulnerability Agent output ---
+    vulnerabilities: List[Dict[str, Any]]     # matched CVEs with severity and justification
+
     # --- ATT&CK Mapping Agent output ---
     techniques: List[Dict[str, Any]]          # [{technique_id, name, confidence, evidence_event_id}]
 
@@ -37,6 +40,7 @@ def new_investigation_state(raw_events: Optional[List[Dict[str, Any]]] = None) -
         raw_events=raw_events or [],
         events=[],
         iocs=[],
+        vulnerabilities=[],
         techniques=[],
         campaign={},
         prediction={},

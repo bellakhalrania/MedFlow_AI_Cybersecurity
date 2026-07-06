@@ -7,6 +7,7 @@ Thin wrapper functions that adapt each Agent class into a LangGraph node
 from graph.state import InvestigationState
 from agents.collection_agent import CollectionAgent
 from agents.enrichment_agent import EnrichmentAgent
+from agents.vulnerability_agent import VulnerabilityAgent
 from agents.attack_mapping_agent import AttackMappingAgent
 from agents.correlation_agent import CorrelationAgent
 from agents.prediction_agent import PredictionAgent
@@ -15,6 +16,7 @@ from agents.response_agent import ResponseAgent
 
 collection_agent = CollectionAgent()
 enrichment_agent = EnrichmentAgent()
+vulnerability_agent = VulnerabilityAgent()
 mapping_agent = AttackMappingAgent()
 correlation_agent = CorrelationAgent()
 prediction_agent = PredictionAgent()
@@ -30,6 +32,14 @@ def collection_node(state: InvestigationState) -> dict:
 def enrichment_node(state: InvestigationState) -> dict:
     iocs = enrichment_agent.run(state.get("events", []))
     return {"iocs": iocs}
+
+
+def vulnerability_node(state: InvestigationState) -> dict:
+    vulnerabilities = vulnerability_agent.run(
+        events=state.get("events", []),
+        iocs=state.get("iocs", []),
+    )
+    return {"vulnerabilities": vulnerabilities}
 
 
 def mapping_node(state: InvestigationState) -> dict:

@@ -1,9 +1,3 @@
-"""
-llm/groq_client.py
-Single, shared connection to Groq's LLM API. Every agent imports `llm`
-from this module instead of creating its own client, so model/config
-changes happen in one place.
-"""
 
 from langchain_groq import ChatGroq
 from config import config

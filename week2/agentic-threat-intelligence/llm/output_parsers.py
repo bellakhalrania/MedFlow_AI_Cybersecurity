@@ -1,8 +1,4 @@
-"""
-llm/output_parsers.py
-LLMs occasionally wrap JSON in markdown fences or add stray prose. These
-helpers defensively extract and parse JSON from raw model output.
-"""
+
 
 import json
 import re

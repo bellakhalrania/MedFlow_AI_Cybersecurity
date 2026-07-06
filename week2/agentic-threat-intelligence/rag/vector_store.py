@@ -23,14 +23,32 @@ def get_attack_collection():
     return client.get_or_create_collection(name=config.CHROMA_COLLECTION_ATTACK)
 
 
-def add_chunks(chunks: list[dict]):
+def get_cve_collection():
+    client = get_client()
+    return client.get_or_create_collection(name="cve_database")
+
+
+def add_chunks(chunks: list[dict], collection_name: str = config.CHROMA_COLLECTION_ATTACK):
     """chunks: list of {text, metadata} dicts (see rag/chunking.py)."""
     if not chunks:
         return
-    collection = get_attack_collection()
+    
+    if collection_name == config.CHROMA_COLLECTION_ATTACK:
+        collection = get_attack_collection()
+    elif collection_name == "cve_database":
+        collection = get_cve_collection()
+    else:
+        raise ValueError(f"Unknown collection: {collection_name}")
+    
     texts = [c["text"] for c in chunks]
     metadatas = [c["metadata"] for c in chunks]
-    ids = [f"{m.get('technique_id', 'unknown')}-{i}" for i, m in enumerate(metadatas)]
+    
+    # Generate appropriate IDs based on collection type
+    if collection_name == config.CHROMA_COLLECTION_ATTACK:
+        ids = [f"{m.get('technique_id', 'unknown')}-{i}" for i, m in enumerate(metadatas)]
+    else:
+        ids = [f"{m.get('cve_id', 'unknown')}-{i}" for i, m in enumerate(metadatas)]
+    
     embeddings = embed_texts(texts)
 
     collection.upsert(
@@ -41,7 +59,13 @@ def add_chunks(chunks: list[dict]):
     )
 
 
-def query_similar(query_text: str, n_results: int = 3) -> dict:
-    collection = get_attack_collection()
+def query_similar(query_text: str, n_results: int = 3, collection_name: str = config.CHROMA_COLLECTION_ATTACK) -> dict:
+    if collection_name == config.CHROMA_COLLECTION_ATTACK:
+        collection = get_attack_collection()
+    elif collection_name == "cve_database":
+        collection = get_cve_collection()
+    else:
+        raise ValueError(f"Unknown collection: {collection_name}")
+    
     embedding = embed_texts([query_text])[0]
     return collection.query(query_embeddings=[embedding], n_results=n_results)

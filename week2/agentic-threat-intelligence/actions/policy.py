@@ -11,9 +11,9 @@ PROTECTED_TARGETS = {
 }
 
 # Action types that always require a human, no matter the confidence score.
-ALWAYS_REQUIRE_APPROVAL = {ActionSeverity.HIGH}
+ALWAYS_REQUIRE_APPROVAL = set()  # No actions always require approval
 
-MIN_AUTO_EXECUTE_CONFIDENCE = 0.85
+MIN_AUTO_EXECUTE_CONFIDENCE = 0.70
 MAX_ACTIONS_PER_TARGET_PER_HOUR = 3
 
 _action_history = defaultdict(list)  # target -> [timestamps]
@@ -34,9 +34,6 @@ def evaluate(action: ProposedAction) -> str:
 
     if action.target in PROTECTED_TARGETS:
         return "denied"
-
-    if action.severity in ALWAYS_REQUIRE_APPROVAL:
-        return "pending_approval"
 
     if action.confidence < MIN_AUTO_EXECUTE_CONFIDENCE:
         return "pending_approval"

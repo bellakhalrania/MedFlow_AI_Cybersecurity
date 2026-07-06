@@ -1,6 +1,7 @@
 from enum import Enum
-from pydantic import BaseModel
 from typing import Optional
+
+from pydantic import BaseModel, Field, field_validator
 
 
 class ActionType(str, Enum):
@@ -9,26 +10,63 @@ class ActionType(str, Enum):
     DISABLE_ACCOUNT = "disable_account"
     KILL_PROCESS = "kill_process"
     QUARANTINE_FILE = "quarantine_file"
-    NOTIFY_ANALYST = "notify_analyst"  # always safe, never needs approval
+    NOTIFY_ANALYST = "notify_analyst"
 
 
 class ActionSeverity(str, Enum):
-    LOW = "low"        # reversible, low blast radius (e.g. notify, tag)
-    MEDIUM = "medium"  # reversible but disruptive (e.g. block IP, disable account)
-    HIGH = "high"      # disruptive + hard to reverse fast (e.g. isolate host)
+    LOW = "low"
+    MEDIUM = "medium"
+    HIGH = "high"
+
+
+class ActionStatus(str, Enum):
+    EXECUTED = "executed"
+    PENDING_APPROVAL = "pending_approval"
+    DENIED = "denied"
+    FAILED = "failed"
 
 
 class ProposedAction(BaseModel):
     action_type: ActionType
-    target: str                      # IP, hostname, username, process id, file hash
+
+    target: str = Field(
+        ...,
+        min_length=1,
+        description="Target of the action (IP, hostname, username, process, hash)"
+    )
+
     severity: ActionSeverity
-    rationale: str
-    technique_id: Optional[str] = None   # which ATT&CK technique triggered this
-    confidence: float = 0.0
+
+    rationale: str = Field(
+        ...,
+        min_length=5,
+        max_length=500,
+    )
+
+    technique_id: Optional[str] = None
+
+    confidence: float = Field(
+        default=0.0,
+        ge=0.0,
+        le=1.0,
+    )
+
+    @field_validator("target")
+    @classmethod
+    def clean_target(cls, value: str):
+        return value.strip()
+
+    @field_validator("rationale")
+    @classmethod
+    def clean_reason(cls, value: str):
+        return value.strip()
 
 
 class ActionResult(BaseModel):
     action: ProposedAction
-    status: str            # "executed" | "skipped_low_confidence" | "pending_approval" | "denied" | "failed"
+
+    status: ActionStatus
+
     detail: str = ""
+
     dry_run: bool = True

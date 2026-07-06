@@ -9,6 +9,7 @@ class ReportingAgent:
         prompt = (
             f"Events:\n{state.get('events')}\n\n"
             f"IOCs:\n{state.get('iocs')}\n\n"
+            f"Vulnerabilities:\n{state.get('vulnerabilities')}\n\n"
             f"ATT&CK Techniques:\n{state.get('techniques')}\n\n"
             f"Campaign:\n{state.get('campaign')}\n\n"
             f"Prediction:\n{state.get('prediction')}"

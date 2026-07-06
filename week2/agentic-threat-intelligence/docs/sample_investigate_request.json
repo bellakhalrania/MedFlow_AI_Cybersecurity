@@ -1,0 +1,13 @@
+{
+  "events": [
+    {
+      "source": "sysmon",
+      "event_id": 1,
+      "timestamp": "2026-06-30T10:15:00Z",
+      "host": "FIN-LAPTOP-12",
+      "user": "analyst",
+      "process": "powershell.exe",
+      "command_line": "powershell.exe -enc aW52b2tlLWV4cHJlc3Npb24="
+    }
+  ]
+}

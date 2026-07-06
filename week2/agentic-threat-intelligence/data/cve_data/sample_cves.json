@@ -1,0 +1,87 @@
+[
+  {
+    "cve_id": "CVE-2021-44228",
+    "description": "Apache Log4j2 2.0-beta9 through 2.15.0 JNDI features used in configuration, log messages, and parameters do not protect against attacker controlled LDAP and other JNDI related endpoints. An attacker who can control log messages or log message parameters can execute arbitrary code loaded from LDAP servers when message lookup substitution is enabled.",
+    "affected_software": [
+      {
+        "name": "Apache Log4j",
+        "versions": ["2.0-beta9", "2.15.0"]
+      }
+    ],
+    "cvss_score": 10.0,
+    "severity": "CRITICAL",
+    "published_date": "2021-12-10",
+    "references": [
+      "https://logging.apache.org/log4j/2.x/security.html",
+      "https://nvd.nist.gov/vuln/detail/CVE-2021-44228"
+    ]
+  },
+  {
+    "cve_id": "CVE-2022-22965",
+    "description": "Spring Framework 5.3.x to 5.3.17, 5.2.x to 5.2.19, and older versions on JDK 9 or JDK 8, when using Spring MVC or Spring WebFlux, are vulnerable to data binding to a class outside the allowed set. A malicious user can craft a malicious request that can lead to remote code execution (RCE).",
+    "affected_software": [
+      {
+        "name": "Spring Framework",
+        "versions": ["5.3.0", "5.3.17", "5.2.0", "5.2.19"]
+      }
+    ],
+    "cvss_score": 9.8,
+    "severity": "CRITICAL",
+    "published_date": "2022-03-31",
+    "references": [
+      "https://spring.io/blog/2022/03/31/spring-framework-rce-early-announcements",
+      "https://nvd.nist.gov/vuln/detail/CVE-2022-22965"
+    ]
+  },
+  {
+    "cve_id": "CVE-2023-23397",
+    "description": "Microsoft Outlook vulnerability allows an attacker to perform NTLM relay attacks by sending a specially crafted email to a target user. The vulnerability is triggered when the email is processed by the Outlook client, which automatically authenticates to a malicious server controlled by the attacker.",
+    "affected_software": [
+      {
+        "name": "Microsoft Outlook",
+        "versions": ["2013", "2016", "2019", "2021"]
+      }
+    ],
+    "cvss_score": 9.8,
+    "severity": "CRITICAL",
+    "published_date": "2023-03-14",
+    "references": [
+      "https://msrc.microsoft.com/update-guide/vulnerability/CVE-2023-23397",
+      "https://nvd.nist.gov/vuln/detail/CVE-2023-23397"
+    ]
+  },
+  {
+    "cve_id": "CVE-2023-46604",
+    "description": "Apache ActiveMQ is vulnerable to remote code execution (RCE) via manipulation of serialized classes. An attacker can create a specially crafted serialized object and send it to a vulnerable ActiveMQ broker, which will deserialize the object and execute arbitrary code.",
+    "affected_software": [
+      {
+        "name": "Apache ActiveMQ",
+        "versions": ["5.18.0", "5.18.1", "5.18.2", "5.18.3"]
+      }
+    ],
+    "cvss_score": 10.0,
+    "severity": "CRITICAL",
+    "published_date": "2023-10-25",
+    "references": [
+      "https://activemq.apache.org/security-advisories.data/CVE-2023-46604.asc",
+      "https://nvd.nist.gov/vuln/detail/CVE-2023-46604"
+    ]
+  },
+  {
+    "cve_id": "CVE-2024-3400",
+    "description": "Palo Alto Networks PAN-OS software contains a vulnerability in the GlobalProtect portal and gateway interfaces that allows an unauthenticated attacker to execute arbitrary code with root privileges on the firewall.",
+    "affected_software": [
+      {
+        "name": "Palo Alto Networks PAN-OS",
+        "versions": ["10.2", "11.0", "11.1"]
+      }
+    ],
+    "cvss_score": 9.3,
+    "severity": "CRITICAL",
+    "published_date": "2024-04-12",
+    "references": [
+      "https://security.paloaltonetworks.com/CVE-2024-3400",
+      "https://nvd.nist.gov/vuln/detail/CVE-2024-3400"
+    ]
+  }
+]
