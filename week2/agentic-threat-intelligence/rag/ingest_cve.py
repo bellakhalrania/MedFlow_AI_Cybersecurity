@@ -1,12 +1,3 @@
-"""
-rag/ingest_cve.py
-One-time (or periodic) ingestion script: loads CVE data from a JSON file
-and stores vulnerability descriptions in ChromaDB for RAG-based retrieval.
-
-Run with:  python -m rag.ingest_cve
-Data source: data/cve_data/sample_cves.json (or path to CVE JSON file)
-"""
-
 import json
 from config import config
 from rag.chunking import chunk_attack_technique

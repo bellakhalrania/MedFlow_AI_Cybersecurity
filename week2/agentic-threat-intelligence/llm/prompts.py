@@ -13,6 +13,7 @@ Supported log sources include:
 - Windows Event Logs
 - Linux auditd
 - EDR telemetry
+- Software/asset inventory feeds
 
 Preserve ALL available evidence.
 
@@ -22,17 +23,36 @@ Normalize the following fields whenever available:
 - event_type
 - timestamp (ISO 8601 UTC)
 - host
+- hostname
 - user
+
+# Software inventory fields (DO NOT REMOVE)
+- product
+- version
+- vendor
+- software
+- application
+
+# Process fields
 - process
+- process_name
 - parent_process
+- image
 - command_line
 - process_guid
-- image
+
+# File fields
 - file_path
 - file_hash
+
+# Registry
 - registry_key
 - registry_value
+
+# Service
 - service_name
+
+# Network
 - src_ip
 - src_port
 - dest_ip
@@ -40,6 +60,8 @@ Normalize the following fields whenever available:
 - protocol
 - dns_query
 - url
+
+# Misc
 - severity
 - rule_name
 - source
@@ -54,6 +76,18 @@ Rules:
 - Never remove suspicious indicators.
 - Do not classify or enrich the event.
 - Do not infer attacker intent.
+
+IMPORTANT:
+
+For software inventory events you MUST preserve:
+
+- product
+- version
+- vendor
+
+Never rename or remove these fields.
+
+If they exist in the original event, they MUST exist in the normalized event.
 
 Respond ONLY with a JSON array.
 No explanations.

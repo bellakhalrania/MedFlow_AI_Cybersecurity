@@ -14,6 +14,7 @@ class Config:
     CHROMA_PERSIST_DIR = os.getenv("CHROMA_PERSIST_DIR", "./data/chroma_store")
     CHROMA_COLLECTION_ATTACK = os.getenv("CHROMA_COLLECTION_ATTACK", "attack_techniques")
     EMBEDDING_MODEL = os.getenv("EMBEDDING_MODEL", "all-MiniLM-L6-v2")
+    CHROMA_DISABLE_TELEMETRY = os.getenv("CHROMA_DISABLE_TELEMETRY", "true").lower() == "true"
 
     # ---------------- Neo4j ----------------
     NEO4J_URI = os.getenv("NEO4J_URI", "bolt://localhost:7687")

@@ -47,7 +47,6 @@ def _handle_unexpected_exception(error):
 def status():
     return jsonify({"status": "running"})
 
-
 @app.route("/investigate", methods=["POST"])
 def investigate():
     if not request.data:
@@ -87,6 +86,12 @@ def investigate():
         duration = perf_counter() - start_time
         logger.exception("Investigation workflow failed duration=%.3fs", duration)
         return jsonify({"error": "Workflow execution failed"}), 500
+
+    # NEW: let the client ask for just the human-readable Markdown report
+    if request.args.get("format") == "report":
+        report_text = final_state.get("report", "") or "No report generated."
+        return app.response_class(report_text, mimetype="text/markdown") 
+
 
     return jsonify(final_state), 200
 
