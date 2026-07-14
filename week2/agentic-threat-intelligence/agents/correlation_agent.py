@@ -37,13 +37,19 @@ class CorrelationAgent:
             valid_technique_ids = {t.get("technique_id") for t in techniques}
             if "related_techniques" in campaign:
                 original = campaign["related_techniques"]
-                grounded = [
-                    tid for tid in original if tid in valid_technique_ids
-                ]
-                dropped = set(original) - set(grounded)
+                # Handle both string IDs and dict objects
+                grounded = []
+                for item in original:
+                    if isinstance(item, dict):
+                        tid = item.get("technique_id")
+                    else:
+                        tid = item
+                    if tid in valid_technique_ids:
+                        grounded.append(tid)
+                dropped = len(original) - len(grounded)
                 if dropped:
                     logger.warning(
-                        f"Dropping ungrounded related_techniques not present in input: {dropped}"
+                        f"Dropping {dropped} ungrounded related_techniques not present in input"
                     )
                 campaign["related_techniques"] = grounded
 

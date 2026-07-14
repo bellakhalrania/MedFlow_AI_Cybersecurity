@@ -1,0 +1,9 @@
+[
+  {
+    "timestamp": "2026-07-07T10:00:00Z",
+    "hostname": "PC01",
+    "event_type": "process_creation",
+    "process_name": "powershell.exe",
+    "command_line": "powershell.exe -EncodedCommand SQBFAFgA"
+  }
+]

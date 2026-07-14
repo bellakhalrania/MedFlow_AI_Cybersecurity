@@ -1,0 +1,14 @@
+{
+  "events": [
+    {
+      "source": "sysmon",
+      "event_id": "evt-001",
+      "timestamp": "2026-06-20T10:15:00Z",
+      "host": "WORKSTATION-07",
+      "user": "jdoe",
+      "process": "powershell.exe",
+      "command_line": "powershell.exe -enc JABzAD0AT...",
+      "event_type": "process_execution"
+    }
+  ]
+}
