@@ -1,9 +1,3 @@
-"""
-rag/cve_retriever.py
-Retrieves relevant CVEs from the ChromaDB cve_database collection
-based on query text (software names, versions, or vulnerability descriptions).
-"""
-
 from rag.vector_store import query_similar
 
 

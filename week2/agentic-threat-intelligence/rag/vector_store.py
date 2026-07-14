@@ -4,9 +4,14 @@ Connects to a local persistent ChromaDB instance and exposes simple
 add/query helpers for the ATT&CK technique collection.
 """
 
+import os
 import chromadb
 from config import config
 from rag.embeddings import embed_texts
+
+# Disable ChromaDB telemetry before importing/using chromadb
+if config.CHROMA_DISABLE_TELEMETRY:
+    os.environ["ANONYMIZED_TELEMETRY"] = "False"
 
 _client = None
 
@@ -14,7 +19,12 @@ _client = None
 def get_client():
     global _client
     if _client is None:
-        _client = chromadb.PersistentClient(path=config.CHROMA_PERSIST_DIR)
+        import chromadb.config
+        settings = chromadb.config.Settings(
+            anonymized_telemetry=config.CHROMA_DISABLE_TELEMETRY,
+            allow_reset=True
+        )
+        _client = chromadb.PersistentClient(path=config.CHROMA_PERSIST_DIR, settings=settings)
     return _client
 
 
